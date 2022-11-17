@@ -27,7 +27,6 @@ class _ProjectBase(SQLModel):
 
 
 class ProjectCreate(_ProjectBase):
-    slug: Optional[str] = Field()
     default_dataset_name: Optional[str] = "default"
 
     @validator("default_dataset_name")
@@ -39,7 +38,6 @@ class ProjectCreate(_ProjectBase):
 
 class ProjectRead(_ProjectBase):
     id: int
-    slug: str
     dataset_list: List["DatasetRead"] = []
 
 
