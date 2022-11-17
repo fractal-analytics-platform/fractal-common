@@ -4,7 +4,6 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
-from pydantic import root_validator
 from pydantic import validator
 from sqlmodel import Field
 from sqlmodel import SQLModel
@@ -32,19 +31,6 @@ class _ProjectBase(SQLModel):
 class ProjectCreate(_ProjectBase):
     slug: Optional[str] = Field()
     default_dataset_name: Optional[str] = "default"
-
-    @root_validator(pre=True)
-    def compute_slug_if_not_provided(cls, values):
-        """
-        Creates the project's slug
-
-        Or double checks the user provided one if any.
-        """
-        slug = values.get("slug", None)
-        if not slug:
-            slug = values["name"]
-            values["slug"] = slugify(slug)
-        return values
 
     @validator("default_dataset_name")
     def not_null(cls, value):
