@@ -8,8 +8,6 @@ from pydantic import validator
 from sqlmodel import Field
 from sqlmodel import SQLModel
 
-from ...utils import slugify
-
 __all__ = (
     "ProjectCreate",
     "ProjectRead",
