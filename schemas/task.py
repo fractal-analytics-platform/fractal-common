@@ -79,7 +79,7 @@ class _TaskCollectBase(BaseModel):
 class TaskCollectPip(_TaskCollectBase):
     package: str
     version: Optional[str]
-    python_version: str = "3.8"
+    python_version: Optional[str] = None
     package_extras: Optional[str]
 
     @validator("package")
