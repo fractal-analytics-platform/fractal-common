@@ -31,6 +31,7 @@ class ApplyWorkflowBase(SQLModel):
     workflow_id: Optional[int]
     overwrite_input: bool = False
     worker_init: Optional[str]
+    working_dir: Optional[str]
 
 
 class ApplyWorkflowCreate(ApplyWorkflowBase):
@@ -40,3 +41,5 @@ class ApplyWorkflowCreate(ApplyWorkflowBase):
 class ApplyWorkflowRead(ApplyWorkflowBase):
     id: int
     start_timestamp: datetime
+    status: str
+    log: Optional[str]
