@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 from typing import Optional
 
 from sqlmodel import SQLModel
@@ -43,3 +44,4 @@ class ApplyWorkflowRead(ApplyWorkflowBase):
     start_timestamp: datetime
     status: str
     log: Optional[str]
+    history: Optional[List[str]]
