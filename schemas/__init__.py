@@ -45,3 +45,9 @@ class ApplyWorkflowRead(ApplyWorkflowBase):
     status: str
     log: Optional[str]
     history: Optional[List[str]]
+
+    def sanitised_dict(self):
+        d = self.dict()
+        d["start_timestamp"] = str(self.start_timestamp)
+        return d
+
