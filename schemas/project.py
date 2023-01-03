@@ -71,7 +71,7 @@ class DatasetRead(_DatasetBase):
 
 class _ResourceBase(SQLModel):
     path: str
-    glob_pattern: Optional[str] = ""
+    glob_pattern: str = "*"
 
     @property
     def glob_path(self) -> Path:
