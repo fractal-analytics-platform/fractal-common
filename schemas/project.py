@@ -71,7 +71,14 @@ class DatasetRead(_DatasetBase):
 
 class _ResourceBase(SQLModel):
     path: str
-    glob_pattern: str = "*"
+    glob_pattern: Optional[str]
+
+    @validator("glob_pattern")
+    def not_null(cls, value):
+        if not value:
+            value = "*"
+        return value
+
 
     @property
     def glob_path(self) -> Path:
