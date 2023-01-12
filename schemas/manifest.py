@@ -63,7 +63,7 @@ class _ManifestBase(BaseModel):
     This model class and the model classes it depends on provide the base
     schema to read, write and validate manifests.
 
-    Attributes
+    Attributes:
         manifest_version:
             A version string that provides indication for compatibility between
             manifests as the schema evolves. This is for instance used by
