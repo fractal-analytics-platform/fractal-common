@@ -19,26 +19,27 @@ class _TaskManifestBase(BaseModel):
 
     Represents a task within a manfest
 
-    Attributes
-    ----------
-    name : str
-        the task name
-    executable : Path
-        path to the executable relative to the package root
+    Attributes:
+        name:
+            The task name
+        executable:
+            Path to the executable relative to the package root
 
-        Note: by package root we mean "as it will be installed". If a package
-        `Pkg` installs in the folder `pkg` the executable `pkg/executable.py`,
-        this attribute must contain only `executable.py`.
-    input_type : str
-        the input type accepted by the task
-    output_type : str
-        the output type returned by the task
-    default_args : Dict[str, Any]
-        an arbitrary, JSON-serializable dictionary containing the default
-        parameters that will be passed to the task
-    meta : Dict[str, Any]
-        additional information about the package, such as hash of the
-        executable, specific runtime requirements (e.g., need_gpu=True), etc.
+            Note: by package root we mean "as it will be installed". If a
+            package `Pkg` installs in the folder `pkg` the executable
+            `pkg/executable.py`, this attribute must contain only
+            `executable.py`.
+        input_type:
+            The input type accepted by the task
+        output_type:
+            The output type returned by the task
+        default_args:
+            An arbitrary, JSON-serializable dictionary containing the default
+            parameters that will be passed to the task
+        meta:
+            Additional information about the package, such as hash of the
+            executable, specific runtime requirements (e.g., need_gpu=True),
+            etc.
     """
 
     name: str
@@ -63,15 +64,14 @@ class _ManifestBase(BaseModel):
     schema to read, write and validate manifests.
 
     Attributes
-    ----------
-    manifest_version : str
-        a version string that provides indication for compatibility between
-        manifests as the schema evolves. This is for instance used by Fractal
-        to determine which subclass of the present base class needs be used to
-        read and validate the input.
-    task_list : List[TaskManifestType]
-        the list of tasks, represented as specified by subclasses of the
-        _TaskManifestBase (a.k.a. TaskManifestType)
+        manifest_version:
+            A version string that provides indication for compatibility between
+            manifests as the schema evolves. This is for instance used by
+            Fractal to determine which subclass of the present base class needs
+            be used to read and validate the input.
+        task_list : List[TaskManifestType]
+            The list of tasks, represented as specified by subclasses of the
+            _TaskManifestBase (a.k.a. TaskManifestType)
     """
 
     manifest_version: str

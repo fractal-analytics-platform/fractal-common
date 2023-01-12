@@ -26,6 +26,17 @@ __all__ = (
 
 
 class ApplyWorkflowBase(SQLModel):
+    """
+    Base class for ApplyWorkflow
+
+    Arguments:
+        input_dataset_id: TBD
+        output_dataset_id: TBD
+        workflow_id: TBD
+        overwrite_input: TBD
+        worker_init: TBD
+        working_dir: TBD
+    """
     project_id: int
     input_dataset_id: int
     output_dataset_id: Optional[int]

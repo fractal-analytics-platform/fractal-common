@@ -28,18 +28,20 @@ class _TaskBase(SQLModel):
     executable.
 
     Attributes
-    ----------
-    name: str
-        a human readable name for the task
-    command: str
-        the command(s) that executes the task
-    source: str
-        path or url to task source. This is the information is used to match
-        tasks across fractal installations when a workflow is imported.
-    input_type, output_type: str
-        the type of data the task expects as input, output, respectively.
-    default_args: Optional[Dict[str, Any]]
-        dictionary (saved as JSON) of the default parameters of the task
+        name:
+            A human readable name for the task
+        command:
+            The command(s) that executes the task
+        source:
+            Path or url to task source. This is the information is used to
+            match tasks across fractal installations when a workflow is
+            imported.
+        input_type:
+            The type of data the task expects as input
+        output_type:
+            The type of data the task expects as output
+        default_args: Optional[Dict[str, Any]]
+            Dictionary (saved as JSON) of the default parameters of the task
     """
 
     name: str
@@ -77,6 +79,15 @@ class _TaskCollectBase(BaseModel):
 
 
 class TaskCollectPip(_TaskCollectBase):
+    """
+    TaskCollectPip class
+
+    Attributes:
+        package: TBD
+        version: TBD
+        python_version: TBD
+        package_extras: TBD
+    """
     package: str
     version: Optional[str]
     python_version: Optional[str] = None
@@ -98,6 +109,18 @@ class TaskCollectPip(_TaskCollectBase):
 
 
 class TaskCollectStatus(_TaskCollectBase):
+    """
+    TaskCollectStatus class
+    
+    Attributes:
+        status: TBD
+        package: TBD
+        venv_path: TBD
+        task_list: TBD
+        log: TBD
+        info: TBD
+    """
+
     status: Literal["pending", "installing", "collecting", "fail", "OK"]
     package: str
     venv_path: Path
@@ -106,6 +129,9 @@ class TaskCollectStatus(_TaskCollectBase):
     info: Optional[str]
 
     def sanitised_dict(self):
+        """
+        Return `self.dict()` after casting `self.venv_path` to a string
+        """
         d = self.dict()
         d["venv_path"] = str(self.venv_path)
         return d

@@ -21,6 +21,14 @@ __all__ = (
 
 
 class _ProjectBase(SQLModel):
+    """
+    Base class for Project
+
+    Attributes:
+        name: TBD
+        project_dir: TBD
+        read_only: TBD
+    """
     name: str
     project_dir: str
     read_only: bool = False
@@ -45,6 +53,16 @@ class ProjectRead(_ProjectBase):
 
 
 class _DatasetBase(SQLModel):
+    """
+    Base class for Dataset
+
+    Attributes:
+        name: TBD
+        project_id: TBD
+        type: TBD
+        meta: TBD
+        read_only: TBD
+    """
     name: str
     project_id: Optional[int]
     type: Optional[str]
@@ -70,6 +88,9 @@ class DatasetRead(_DatasetBase):
 
 
 class _ResourceBase(SQLModel):
+    """
+    Base class for Resource
+    """
     path: str
     glob_pattern: Optional[str]
 
