@@ -29,7 +29,7 @@ class ApplyWorkflowBase(SQLModel):
     """
     Base class for ApplyWorkflow
 
-    Arguments:
+    Attributes:
         input_dataset_id: TBD
         output_dataset_id: TBD
         workflow_id: TBD
@@ -37,6 +37,7 @@ class ApplyWorkflowBase(SQLModel):
         worker_init: TBD
         working_dir: TBD
     """
+
     project_id: int
     input_dataset_id: int
     output_dataset_id: Optional[int]
@@ -61,4 +62,3 @@ class ApplyWorkflowRead(ApplyWorkflowBase):
         d = self.dict()
         d["start_timestamp"] = str(self.start_timestamp)
         return d
-
