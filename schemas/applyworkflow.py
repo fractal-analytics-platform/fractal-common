@@ -23,6 +23,7 @@ class ApplyWorkflowBase(SQLModel):
         overwrite_input: TBD
         worker_init: TBD
         working_dir: TBD
+        working_dir_user: TBD
     """
 
     project_id: int
@@ -32,6 +33,7 @@ class ApplyWorkflowBase(SQLModel):
     overwrite_input: bool = False
     worker_init: Optional[str]
     working_dir: Optional[str]
+    working_dir_user: Optional[str]
 
 
 class ApplyWorkflowCreate(ApplyWorkflowBase):
