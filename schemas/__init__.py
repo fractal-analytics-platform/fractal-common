@@ -8,7 +8,7 @@ from .workflow import *  # noqa: F403
 
 
 __all__ = (
-    +project.__all__  # noqa: F405
+    project.__all__  # noqa: F405
     + task.__all__  # noqa: F405
     + workflow.__all__  # noqa: F405
     + applyworkflow.__all__  # noqa: F405
