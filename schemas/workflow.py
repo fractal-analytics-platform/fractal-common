@@ -7,13 +7,19 @@ from pydantic import validator
 from sqlmodel import SQLModel
 
 from .task import TaskRead
+from .task import TaskImport
+from .task import TaskExport
 
 
 __all__ = (
     "WorkflowCreate",
     "WorkflowRead",
     "WorkflowUpdate",
+    "WorkflowImport",
+    "WorkflowExport",
     "WorkflowTaskCreate",
+    "WorkflowTaskImport",
+    "WorkflowTaskExport",
     "WorkflowTaskRead",
     "WorkflowTaskUpdate",
 )
@@ -35,6 +41,14 @@ class WorkflowTaskRead(_WorkflowTaskBase):
     id: int
     workflow_id: int
     task: TaskRead
+
+
+class WorkflowTaskImport(_WorkflowTaskBase):
+    task: TaskImport
+
+
+class WorkflowTaskExport(_WorkflowTaskBase):
+    task: TaskExport
 
 
 class WorkflowTaskUpdate(_WorkflowTaskBase):
@@ -62,6 +76,15 @@ class WorkflowRead(_WorkflowBase):
 
 class WorkflowCreate(_WorkflowBase):
     pass
+
+
+class WorkflowImport(_WorkflowBase):
+    task_list: List[WorkflowTaskImport]
+
+
+class WorkflowExport(_WorkflowBase):
+    project_id: Optional[int]
+    task_list: List[WorkflowTaskExport]
 
 
 class WorkflowUpdate(_WorkflowBase):
