@@ -15,6 +15,8 @@ __all__ = (
     "TaskCreate",
     "TaskUpdate",
     "TaskRead",
+    "TaskImport",
+    "TaskExport",
     "TaskCollectPip",
     "TaskCollectStatus",
 )
@@ -64,6 +66,14 @@ class TaskUpdate(_TaskBase):
     source: Optional[str]  # type:ignore
     default_args: Optional[Dict[str, Any]]  # type:ignore
     meta: Optional[Dict[str, Any]]  # type:ignore
+
+
+class TaskImport(_TaskBase):
+    pass
+
+
+class TaskExport(_TaskBase):
+    pass
 
 
 class TaskRead(_TaskBase):
