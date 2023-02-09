@@ -6,9 +6,9 @@ from typing import Optional
 from pydantic import validator
 from sqlmodel import SQLModel
 
-from .task import TaskRead
-from .task import TaskImport
 from .task import TaskExport
+from .task import TaskImport
+from .task import TaskRead
 
 
 __all__ = (
@@ -43,12 +43,18 @@ class WorkflowTaskRead(_WorkflowTaskBase):
     task: TaskRead
 
 
-class WorkflowTaskImport(_WorkflowTaskBase):
+class WorkflowTaskImport(SQLModel):
     task: TaskImport
+    order: Optional[int]
+    meta: Optional[Dict[str, Any]] = None
+    args: Optional[Dict[str, Any]] = None
 
 
-class WorkflowTaskExport(_WorkflowTaskBase):
+class WorkflowTaskExport(SQLModel):
     task: TaskExport
+    order: Optional[int]
+    meta: Optional[Dict[str, Any]] = None
+    args: Optional[Dict[str, Any]] = None
 
 
 class WorkflowTaskUpdate(_WorkflowTaskBase):
@@ -78,15 +84,16 @@ class WorkflowCreate(_WorkflowBase):
     pass
 
 
-class WorkflowImport(_WorkflowBase):
-    task_list: List[WorkflowTaskImport]
-
-
-class WorkflowExport(_WorkflowBase):
-    project_id: Optional[int]
-    task_list: List[WorkflowTaskExport]
-
-
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]  # type: ignore
     project_id: Optional[int]  # type: ignore
+
+
+class WorkflowImport(SQLModel):
+    name: str
+    task_list: List[WorkflowTaskImport]
+
+
+class WorkflowExport(SQLModel):
+    name: str
+    task_list: List[WorkflowTaskExport]
