@@ -98,6 +98,7 @@ class TaskCollectPip(_TaskCollectBase):
         python_version: TBD
         package_extras: TBD
     """
+
     package: str
     version: Optional[str]
     python_version: Optional[str] = None
@@ -121,7 +122,7 @@ class TaskCollectPip(_TaskCollectBase):
 class TaskCollectStatus(_TaskCollectBase):
     """
     TaskCollectStatus class
-    
+
     Attributes:
         status: TBD
         package: TBD

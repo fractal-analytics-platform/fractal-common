@@ -33,14 +33,14 @@ class _WorkflowTaskBase(SQLModel):
 
 class WorkflowTaskCreate(_WorkflowTaskBase):
     task_id: int
-    workflow_id: Optional[int]  # FIXME check optional
+    workflow_id: Optional[int]
 
 
 class WorkflowTaskRead(_WorkflowTaskBase):
     id: int
     workflow_id: int
+    task_id: int
     task: TaskRead
-    task_id: Optional[int]  # FIXME make required
 
 
 class WorkflowTaskImport(_WorkflowTaskBase):
@@ -52,11 +52,6 @@ class WorkflowTaskExport(_WorkflowTaskBase):
 
 
 class WorkflowTaskUpdate(_WorkflowTaskBase):
-    args: Optional[Dict[str, Any]]  # type: ignore
-    meta: Optional[Dict[str, Any]]  # type: ignore
-    workflow_id: Optional[int]  # FIXME remove later
-    task_id: Optional[int]  # FIXME remove later
-
     @validator("meta")
     def check_no_parallelisation_level(cls, m):
         if "parallelization_level" in m:
@@ -82,7 +77,6 @@ class WorkflowCreate(_WorkflowBase):
 
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]  # type: ignore
-    project_id: Optional[int]  # type: ignore
 
 
 class WorkflowImport(_WorkflowBase):

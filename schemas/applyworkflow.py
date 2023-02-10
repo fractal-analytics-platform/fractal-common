@@ -29,7 +29,7 @@ class ApplyWorkflowBase(SQLModel):
     project_id: int
     input_dataset_id: int
     output_dataset_id: Optional[int]
-    workflow_id: Optional[int]
+    workflow_id: int
     overwrite_input: bool = False
     worker_init: Optional[str]
     working_dir: Optional[str]
