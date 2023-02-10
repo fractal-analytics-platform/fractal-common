@@ -45,16 +45,10 @@ class WorkflowTaskRead(_WorkflowTaskBase):
 
 class WorkflowTaskImport(_WorkflowTaskBase):
     task: TaskImport
-    order: Optional[int]
-    meta: Optional[Dict[str, Any]] = None
-    args: Optional[Dict[str, Any]] = None
 
 
 class WorkflowTaskExport(_WorkflowTaskBase):
     task: TaskExport
-    order: Optional[int]
-    meta: Optional[Dict[str, Any]] = None
-    args: Optional[Dict[str, Any]] = None
 
 
 class WorkflowTaskUpdate(_WorkflowTaskBase):
@@ -92,10 +86,8 @@ class WorkflowUpdate(_WorkflowBase):
 
 
 class WorkflowImport(_WorkflowBase):
-    name: str
     task_list: List[WorkflowTaskImport]
 
 
 class WorkflowExport(_WorkflowBase):
-    name: str
     task_list: List[WorkflowTaskExport]
