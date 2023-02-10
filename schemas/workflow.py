@@ -26,8 +26,6 @@ __all__ = (
 
 
 class _WorkflowTaskBase(SQLModel):
-    workflow_id: Optional[int]
-    task_id: Optional[int]
     order: Optional[int]
     meta: Optional[Dict[str, Any]] = None
     args: Optional[Dict[str, Any]] = None
@@ -35,22 +33,24 @@ class _WorkflowTaskBase(SQLModel):
 
 class WorkflowTaskCreate(_WorkflowTaskBase):
     task_id: int
+    workflow_id: Optional[int]  # FIXME check optional
 
 
 class WorkflowTaskRead(_WorkflowTaskBase):
     id: int
     workflow_id: int
     task: TaskRead
+    task_id: Optional[int]  # FIXME make required
 
 
-class WorkflowTaskImport(SQLModel):
+class WorkflowTaskImport(_WorkflowTaskBase):
     task: TaskImport
     order: Optional[int]
     meta: Optional[Dict[str, Any]] = None
     args: Optional[Dict[str, Any]] = None
 
 
-class WorkflowTaskExport(SQLModel):
+class WorkflowTaskExport(_WorkflowTaskBase):
     task: TaskExport
     order: Optional[int]
     meta: Optional[Dict[str, Any]] = None
@@ -60,6 +60,8 @@ class WorkflowTaskExport(SQLModel):
 class WorkflowTaskUpdate(_WorkflowTaskBase):
     args: Optional[Dict[str, Any]]  # type: ignore
     meta: Optional[Dict[str, Any]]  # type: ignore
+    workflow_id: Optional[int]  # FIXME remove later
+    task_id: Optional[int]  # FIXME remove later
 
     @validator("meta")
     def check_no_parallelisation_level(cls, m):
@@ -72,16 +74,16 @@ class WorkflowTaskUpdate(_WorkflowTaskBase):
 
 class _WorkflowBase(SQLModel):
     name: str
-    project_id: int
 
 
 class WorkflowRead(_WorkflowBase):
     id: int
+    project_id: int
     task_list: List[WorkflowTaskRead]
 
 
 class WorkflowCreate(_WorkflowBase):
-    pass
+    project_id: int
 
 
 class WorkflowUpdate(_WorkflowBase):
@@ -89,11 +91,11 @@ class WorkflowUpdate(_WorkflowBase):
     project_id: Optional[int]  # type: ignore
 
 
-class WorkflowImport(SQLModel):
+class WorkflowImport(_WorkflowBase):
     name: str
     task_list: List[WorkflowTaskImport]
 
 
-class WorkflowExport(SQLModel):
+class WorkflowExport(_WorkflowBase):
     name: str
     task_list: List[WorkflowTaskExport]
