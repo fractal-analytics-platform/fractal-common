@@ -68,12 +68,14 @@ class TaskUpdate(_TaskBase):
     meta: Optional[Dict[str, Any]]  # type:ignore
 
 
-class TaskImport(_TaskBase):
-    pass
+class TaskImport(SQLModel):
+    name: str
+    source: str
 
 
-class TaskExport(_TaskBase):
-    pass
+class TaskExport(SQLModel):
+    name: str
+    source: str
 
 
 class TaskRead(_TaskBase):
