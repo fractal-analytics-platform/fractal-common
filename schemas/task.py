@@ -23,7 +23,7 @@ __all__ = (
 
 
 class _TaskBase(SQLModel):
-    """
+    """ # TODO fix me
     Task base class
 
     A Task is the elemental unit of a workflow, and must be a self-standing
@@ -47,17 +47,9 @@ class _TaskBase(SQLModel):
     """
 
     name: str
-    command: str
     source: str
-    input_type: str
-    output_type: str
-    default_args: Optional[Dict[str, Any]] = Field(default={})
-    meta: Optional[Dict[str, Any]] = Field(default={})
-
-    class Config:
-        arbitrary_types_allowed = True
-
-
+    
+    
 class TaskUpdate(_TaskBase):
     name: Optional[str]  # type:ignore
     input_type: Optional[str]  # type:ignore
@@ -68,22 +60,29 @@ class TaskUpdate(_TaskBase):
     meta: Optional[Dict[str, Any]]  # type:ignore
 
 
-class TaskImport(SQLModel):
-    name: str
-    source: str
+class TaskImport(_TaskBase):
+    pass
 
 
-class TaskExport(SQLModel):
-    name: str
-    source: str
+class TaskExport(_TaskBase):
+    pass
 
 
 class TaskRead(_TaskBase):
     id: int
+    command: str
+    input_type: str
+    output_type: str
+    default_args: Optional[Dict[str, Any]] = Field(default={})
+    meta: Optional[Dict[str, Any]] = Field(default={})
 
 
 class TaskCreate(_TaskBase):
-    pass
+    command: str
+    input_type: str
+    output_type: str
+    default_args: Optional[Dict[str, Any]] = Field(default={})
+    meta: Optional[Dict[str, Any]] = Field(default={})
 
 
 class _TaskCollectBase(BaseModel):
