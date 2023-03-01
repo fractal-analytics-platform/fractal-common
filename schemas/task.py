@@ -46,8 +46,8 @@ class _TaskBase(SQLModel):
             Dictionary (saved as JSON) of the default parameters of the task
     """
 
-    name: str
-    source: str
+    name: str = Field(alias="name")
+    source: str = Field(alias="source")
 
 
 class TaskUpdate(_TaskBase):
@@ -92,7 +92,7 @@ class TaskCreate(_TaskBase):
     default_args: Optional[Dict[str, Any]] = Field(default={})
     meta: Optional[Dict[str, Any]] = Field(default={})
 
-    @validator("command", "input_type", "output_type")
+    @validator("name", "source", "command", "input_type", "output_type")
     def not_empty_str(cls, value, field):
         v = value.strip()
         if not v:
