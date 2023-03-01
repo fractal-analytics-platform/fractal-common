@@ -5,7 +5,6 @@ from typing import List
 from typing import Optional
 
 from pydantic import validator
-from sqlmodel import Field
 from sqlmodel import SQLModel
 
 __all__ = (
@@ -29,6 +28,7 @@ class _ProjectBase(SQLModel):
         project_dir: TBD
         read_only: TBD
     """
+
     name: str
     project_dir: str
     read_only: bool = False
@@ -36,6 +36,15 @@ class _ProjectBase(SQLModel):
 
 class ProjectCreate(_ProjectBase):
     default_dataset_name: Optional[str] = "default"
+
+    @validator("project_dir")
+    def not_empty_str(cls, value):
+        # removes all whitespace characters from the start and end of value
+        v = value.strip()
+        if not v:
+            raise ValueError("project_dir cannot be empty")
+        else:
+            return v
 
     @validator("default_dataset_name")
     def not_null(cls, value):
@@ -63,6 +72,7 @@ class _DatasetBase(SQLModel):
         meta: TBD
         read_only: TBD
     """
+
     name: str
     project_id: Optional[int]
     type: Optional[str]
@@ -91,6 +101,7 @@ class _ResourceBase(SQLModel):
     """
     Base class for Resource
     """
+
     path: str
     glob_pattern: Optional[str]
 
@@ -99,7 +110,6 @@ class _ResourceBase(SQLModel):
         if not value:
             value = "*"
         return value
-
 
     @property
     def glob_path(self) -> Path:
