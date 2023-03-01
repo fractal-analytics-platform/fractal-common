@@ -39,7 +39,6 @@ class ProjectCreate(_ProjectBase):
 
     @validator("project_dir")
     def not_empty_str(cls, value):
-        # removes all whitespace characters from the start and end of value
         v = value.strip()
         if not v:
             raise ValueError("project_dir cannot be empty")
