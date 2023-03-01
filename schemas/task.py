@@ -23,7 +23,7 @@ __all__ = (
 
 
 class _TaskBase(SQLModel):
-    """ # TODO fix me
+    """# TODO fix me
     Task base class
 
     A Task is the elemental unit of a workflow, and must be a self-standing
@@ -48,16 +48,24 @@ class _TaskBase(SQLModel):
 
     name: str
     source: str
-    
-    
+
+
 class TaskUpdate(_TaskBase):
-    name: Optional[str]  # type:ignore
-    input_type: Optional[str]  # type:ignore
-    output_type: Optional[str]  # type:ignore
-    command: Optional[str]  # type:ignore
-    source: Optional[str]  # type:ignore
+    name: Optional[str] = Field(alias="name")
+    input_type: Optional[str] = Field(alias="input_type")
+    output_type: Optional[str] = Field(alias="output_type")
+    command: Optional[str] = Field(alias="command")
+    source: Optional[str] = Field(alias="source")
     default_args: Optional[Dict[str, Any]]  # type:ignore
     meta: Optional[Dict[str, Any]]  # type:ignore
+
+    @validator("name", "input_type", "output_type", "command", "source")
+    def not_empty_str(cls, value, field):
+        v = value.strip()
+        if not v:
+            raise ValueError(f"{field.alias} cannot be empty")
+        else:
+            return v
 
 
 class TaskImport(_TaskBase):
@@ -78,11 +86,19 @@ class TaskRead(_TaskBase):
 
 
 class TaskCreate(_TaskBase):
-    command: str
-    input_type: str
-    output_type: str
+    command: str = Field(alias="command")
+    input_type: str = Field(alias="input_type")
+    output_type: str = Field(alias="output_type")
     default_args: Optional[Dict[str, Any]] = Field(default={})
     meta: Optional[Dict[str, Any]] = Field(default={})
+
+    @validator("command", "input_type", "output_type")
+    def not_empty_str(cls, value, field):
+        v = value.strip()
+        if not v:
+            raise ValueError(f"{field.alias} cannot be empty")
+        else:
+            return v
 
 
 class _TaskCollectBase(BaseModel):
