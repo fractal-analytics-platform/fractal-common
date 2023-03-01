@@ -41,7 +41,7 @@ class ProjectCreate(_ProjectBase):
     def not_empty_str(cls, value):
         v = value.strip()
         if not v:
-            raise ValueError("project_dir cannot be empty")
+            raise ValueError("'project_dir' cannot be empty")
         else:
             return v
 

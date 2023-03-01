@@ -90,6 +90,14 @@ class WorkflowCreate(_WorkflowBase):
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]  # type: ignore
 
+    @validator("name")
+    def not_empty_str(cls, value):
+        v = value.strip()
+        if not v:
+            raise ValueError("'name' cannot be empty")
+        else:
+            return v
+
 
 class WorkflowImport(_WorkflowBase):
     task_list: List[WorkflowTaskImport]
