@@ -2,8 +2,8 @@ from datetime import datetime
 from typing import List
 from typing import Optional
 
+from pydantic import root_validator
 from sqlmodel import SQLModel
-
 
 __all__ = (
     "ApplyWorkflowBase",
@@ -32,8 +32,16 @@ class ApplyWorkflowBase(SQLModel):
     workflow_id: int
     overwrite_input: bool = False
     worker_init: Optional[str]
-    working_dir: Optional[str]
-    working_dir_user: Optional[str]
+
+    @root_validator(pre=True)
+    def positive_integers(cls, values):
+        for k, v in values.items():
+            if isinstance(v, int):
+                if v < 1:
+                    raise ValueError(
+                        f"'{k}' cannot be less than 1 (given {v})"
+                    )
+        return values
 
 
 class ApplyWorkflowCreate(ApplyWorkflowBase):
@@ -46,6 +54,8 @@ class ApplyWorkflowRead(ApplyWorkflowBase):
     status: str
     log: Optional[str]
     history: Optional[List[str]]
+    working_dir: Optional[str]
+    working_dir_user: Optional[str]
 
     def sanitised_dict(self):
         d = self.dict()
