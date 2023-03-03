@@ -9,7 +9,7 @@ from sqlmodel import SQLModel
 from .task import TaskExport
 from .task import TaskImport
 from .task import TaskRead
-from schemas.__validator import validate_str
+from schemas._validator import validate_str
 
 
 __all__ = (

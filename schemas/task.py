@@ -11,7 +11,7 @@ from pydantic import validator
 from sqlmodel import Field  # type: ignore
 from sqlmodel import SQLModel
 
-from schemas.__validator import validate_str
+from schemas._validator import validate_str
 
 __all__ = (
     "TaskCreate",
@@ -48,8 +48,8 @@ class _TaskBase(SQLModel):
             Dictionary (saved as JSON) of the default parameters of the task
     """
 
-    name: str = Field(alias="name")
-    source: str = Field(alias="source")
+    name: str
+    source: str
 
 
 class TaskUpdate(_TaskBase):

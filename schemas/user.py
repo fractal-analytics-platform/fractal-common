@@ -4,7 +4,7 @@ from typing import Optional
 from fastapi_users import schemas
 from pydantic import validator
 
-from schemas.__validator import validate_str
+from schemas._validator import validate_str
 
 __all__ = (
     "UserRead",
