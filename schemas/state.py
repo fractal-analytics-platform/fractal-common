@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import Any
 from typing import Dict
-from typing import Optional
 
 from sqlmodel import SQLModel
 
@@ -20,12 +19,9 @@ class _StateBase(SQLModel):
         data: Content of the state
         timestamp: Time stamp of the state
     """
-    id: Optional[int]
+
     data: Dict[str, Any]
     timestamp: datetime
-
-    class Config:
-        arbitrary_types_allowed = True
 
     def sanitised_dict(self):
         """
@@ -37,4 +33,4 @@ class _StateBase(SQLModel):
 
 
 class StateRead(_StateBase):
-    pass
+    id: int
