@@ -1,11 +1,9 @@
-from pathlib import Path
 from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
 
 from pydantic import validator
-from sqlmodel import Field
 from sqlmodel import SQLModel
 
 __all__ = (
@@ -29,6 +27,7 @@ class _ProjectBase(SQLModel):
         project_dir: TBD
         read_only: TBD
     """
+
     name: str
     project_dir: str
     read_only: bool = False
@@ -63,6 +62,7 @@ class _DatasetBase(SQLModel):
         meta: TBD
         read_only: TBD
     """
+
     name: str
     project_id: Optional[int]
     type: Optional[str]
@@ -91,19 +91,8 @@ class _ResourceBase(SQLModel):
     """
     Base class for Resource
     """
+
     path: str
-    glob_pattern: Optional[str]
-
-    @validator("glob_pattern")
-    def not_null(cls, value):
-        if not value:
-            value = "*"
-        return value
-
-
-    @property
-    def glob_path(self) -> Path:
-        return Path(self.path) / self.glob_pattern
 
 
 class ResourceCreate(_ResourceBase):
