@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Any
 from typing import Dict
 from typing import List
@@ -102,17 +101,6 @@ class _ResourceBase(SQLModel):
     """
 
     path: str
-    glob_pattern: Optional[str]
-
-    @validator("glob_pattern")
-    def not_null(cls, value):
-        if not value:
-            value = "*"
-        return value
-
-    @property
-    def glob_path(self) -> Path:
-        return Path(self.path) / self.glob_pattern
 
 
 class ResourceCreate(_ResourceBase):
