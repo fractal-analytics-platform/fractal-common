@@ -9,6 +9,7 @@ from sqlmodel import SQLModel
 from .task import TaskExport
 from .task import TaskImport
 from .task import TaskRead
+from schemas._validator import validate_str
 
 
 __all__ = (
@@ -34,6 +35,12 @@ class _WorkflowTaskBase(SQLModel):
 class WorkflowTaskCreate(_WorkflowTaskBase):
     task_id: int
     workflow_id: Optional[int]
+
+    @validator("task_id", "workflow_id")
+    def positive(cls, _id):
+        if (_id is not None) and _id < 1:
+            raise ValueError(f"IDs must be positive integers, given {_id}")
+        return _id
 
 
 class WorkflowTaskRead(_WorkflowTaskBase):
@@ -74,9 +81,20 @@ class WorkflowRead(_WorkflowBase):
 class WorkflowCreate(_WorkflowBase):
     project_id: int
 
+    @validator("project_id")
+    def positive(cls, _id):
+        if _id < 1:
+            raise ValueError(f"IDs must be positive integers, given {_id}")
+        return _id
+
 
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]  # type: ignore
+
+    @validator("name")
+    def not_empty_str(cls, value):
+        v = validate_str(value, "name")
+        return v
 
 
 class WorkflowImport(_WorkflowBase):

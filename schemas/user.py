@@ -2,6 +2,9 @@ import uuid
 from typing import Optional
 
 from fastapi_users import schemas
+from pydantic import validator
+
+from schemas._validator import validate_str
 
 __all__ = (
     "UserRead",
@@ -20,3 +23,8 @@ class UserUpdate(schemas.BaseUserUpdate):
 
 class UserCreate(schemas.BaseUserCreate):
     slurm_user: Optional[str]
+
+    @validator("slurm_user")
+    def not_empty_str(cls, value):
+        v = validate_str(value, "slurm_user")
+        return v

@@ -6,10 +6,12 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import root_validator
 from pydantic import validator
 from sqlmodel import Field  # type: ignore
 from sqlmodel import SQLModel
 
+from schemas._validator import validate_str
 
 __all__ = (
     "TaskCreate",
@@ -23,7 +25,7 @@ __all__ = (
 
 
 class _TaskBase(SQLModel):
-    """ # TODO fix me
+    """# TODO fix me
     Task base class
 
     A Task is the elemental unit of a workflow, and must be a self-standing
@@ -48,16 +50,23 @@ class _TaskBase(SQLModel):
 
     name: str
     source: str
-    
-    
+
+
 class TaskUpdate(_TaskBase):
-    name: Optional[str]  # type:ignore
-    input_type: Optional[str]  # type:ignore
-    output_type: Optional[str]  # type:ignore
-    command: Optional[str]  # type:ignore
-    source: Optional[str]  # type:ignore
+    name: Optional[str]
+    input_type: Optional[str]
+    output_type: Optional[str]
+    command: Optional[str]
+    source: Optional[str]
     default_args: Optional[Dict[str, Any]]  # type:ignore
     meta: Optional[Dict[str, Any]]  # type:ignore
+
+    @root_validator(pre=True)
+    def not_empty_strings(cls, values):
+        for k, v in values.items():
+            if isinstance(v, str):
+                values[k] = validate_str(v, k)
+        return values
 
 
 class TaskImport(_TaskBase):
@@ -83,6 +92,13 @@ class TaskCreate(_TaskBase):
     output_type: str
     default_args: Optional[Dict[str, Any]] = Field(default={})
     meta: Optional[Dict[str, Any]] = Field(default={})
+
+    @root_validator(pre=True)
+    def not_empty_strings(cls, values):
+        for k, v in values.items():
+            if isinstance(v, str):
+                values[k] = validate_str(v, k)
+        return values
 
 
 class _TaskCollectBase(BaseModel):

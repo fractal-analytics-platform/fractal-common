@@ -6,6 +6,9 @@ from typing import Optional
 from pydantic import validator
 from sqlmodel import SQLModel
 
+from schemas._validator import validate_str
+
+
 __all__ = (
     "ProjectCreate",
     "ProjectRead",
@@ -36,11 +39,14 @@ class _ProjectBase(SQLModel):
 class ProjectCreate(_ProjectBase):
     default_dataset_name: Optional[str] = "default"
 
+    @validator("project_dir")
+    def not_empty_str(cls, value):
+        v = validate_str(value, "project_dir")
+        return v
+
     @validator("default_dataset_name")
     def not_null(cls, value):
-        if not value:
-            value = "default"
-        return value
+        return value or "default"
 
 
 class ProjectRead(_ProjectBase):
