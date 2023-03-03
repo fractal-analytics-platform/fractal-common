@@ -3,6 +3,7 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
+from pydantic import root_validator
 from pydantic import validator
 from sqlmodel import SQLModel
 
@@ -35,18 +36,23 @@ class _ProjectBase(SQLModel):
     project_dir: str
     read_only: bool = False
 
+    @root_validator(pre=True)
+    def not_empty_strings(cls, values):
+        for k, v in values.items():
+            if isinstance(v, str):
+                values[k] = validate_str(v, k)
+        return values
+
 
 class ProjectCreate(_ProjectBase):
     default_dataset_name: Optional[str] = "default"
 
-    @validator("project_dir")
-    def not_empty_str(cls, value):
-        v = validate_str(value, "project_dir")
-        return v
-
     @validator("default_dataset_name")
     def not_null(cls, value):
-        return value or "default"
+        """if value.strip()=="" then returns "default"
+        else return value.strip()
+        """
+        return value.strip() or "default"
 
 
 class ProjectRead(_ProjectBase):
@@ -70,7 +76,6 @@ class _DatasetBase(SQLModel):
     """
 
     name: str
-    project_id: Optional[int]
     type: Optional[str]
     meta: Dict[str, Any] = {}
     read_only: Optional[bool] = False
@@ -88,6 +93,7 @@ class DatasetCreate(_DatasetBase):
 class DatasetRead(_DatasetBase):
     id: int
     resource_list: List["ResourceRead"]
+    project_id: Optional[int]
 
 
 # RESOURCE
