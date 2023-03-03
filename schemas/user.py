@@ -4,6 +4,8 @@ from typing import Optional
 from fastapi_users import schemas
 from pydantic import validator
 
+from schemas.__validator import validate_str
+
 __all__ = (
     "UserRead",
     "UserUpdate",
@@ -24,8 +26,5 @@ class UserCreate(schemas.BaseUserCreate):
 
     @validator("slurm_user")
     def not_empty_str(cls, value):
-        v = value.strip()
-        if not v:
-            raise ValueError("'slurm_user' cannot be empty")
-        else:
-            return v
+        v = validate_str(value, "slurm_user")
+        return v

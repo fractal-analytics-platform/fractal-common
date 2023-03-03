@@ -9,6 +9,7 @@ from sqlmodel import SQLModel
 from .task import TaskExport
 from .task import TaskImport
 from .task import TaskRead
+from schemas.__validator import validate_str
 
 
 __all__ = (
@@ -92,11 +93,8 @@ class WorkflowUpdate(_WorkflowBase):
 
     @validator("name")
     def not_empty_str(cls, value):
-        v = value.strip()
-        if not v:
-            raise ValueError("'name' cannot be empty")
-        else:
-            return v
+        v = validate_str(value, "name")
+        return v
 
 
 class WorkflowImport(_WorkflowBase):

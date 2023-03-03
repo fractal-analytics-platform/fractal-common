@@ -6,10 +6,12 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import root_validator
 from pydantic import validator
 from sqlmodel import Field  # type: ignore
 from sqlmodel import SQLModel
 
+from schemas.__validator import validate_str
 
 __all__ = (
     "TaskCreate",
@@ -51,21 +53,20 @@ class _TaskBase(SQLModel):
 
 
 class TaskUpdate(_TaskBase):
-    name: Optional[str] = Field(alias="name")
-    input_type: Optional[str] = Field(alias="input_type")
-    output_type: Optional[str] = Field(alias="output_type")
-    command: Optional[str] = Field(alias="command")
-    source: Optional[str] = Field(alias="source")
+    name: Optional[str]
+    input_type: Optional[str]
+    output_type: Optional[str]
+    command: Optional[str]
+    source: Optional[str]
     default_args: Optional[Dict[str, Any]]  # type:ignore
     meta: Optional[Dict[str, Any]]  # type:ignore
 
-    @validator("name", "input_type", "output_type", "command", "source")
-    def not_empty_str(cls, value, field):
-        v = value.strip()
-        if not v:
-            raise ValueError(f"{field.alias} cannot be empty")
-        else:
-            return v
+    @root_validator(pre=True)
+    def not_empty_strings(cls, values):
+        for k, v in values.items():
+            if isinstance(v, str):
+                values[k] = validate_str(v, k)
+        return values
 
 
 class TaskImport(_TaskBase):
@@ -86,19 +87,18 @@ class TaskRead(_TaskBase):
 
 
 class TaskCreate(_TaskBase):
-    command: str = Field(alias="command")
-    input_type: str = Field(alias="input_type")
-    output_type: str = Field(alias="output_type")
+    command: str
+    input_type: str
+    output_type: str
     default_args: Optional[Dict[str, Any]] = Field(default={})
     meta: Optional[Dict[str, Any]] = Field(default={})
 
-    @validator("name", "source", "command", "input_type", "output_type")
-    def not_empty_str(cls, value, field):
-        v = value.strip()
-        if not v:
-            raise ValueError(f"{field.alias} cannot be empty")
-        else:
-            return v
+    @root_validator(pre=True)
+    def not_empty_strings(cls, values):
+        for k, v in values.items():
+            if isinstance(v, str):
+                values[k] = validate_str(v, k)
+        return values
 
 
 class _TaskCollectBase(BaseModel):
