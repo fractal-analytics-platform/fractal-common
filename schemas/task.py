@@ -11,7 +11,7 @@ from pydantic import validator
 from sqlmodel import Field  # type: ignore
 from sqlmodel import SQLModel
 
-from schemas._validator import validate_str
+from ._validator import validate_str
 
 __all__ = (
     "TaskCreate",

@@ -6,7 +6,7 @@ from typing import Optional
 from pydantic import validator
 from sqlmodel import SQLModel
 
-from schemas._validator import validate_str
+from ._validator import validate_str
 
 
 __all__ = (
