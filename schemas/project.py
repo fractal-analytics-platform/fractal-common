@@ -3,8 +3,6 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
-from pydantic import validator
-
 from .base import Base
 
 
@@ -37,14 +35,6 @@ class _ProjectBase(Base):
 
 class ProjectCreate(_ProjectBase):
     default_dataset_name: Optional[str] = "default"
-
-    # TODO test this
-    @validator("default_dataset_name")
-    def not_null(cls, value):
-        """if value.strip()=="" then returns "default"
-        else return value.strip()
-        """
-        return value.strip() or "default"
 
 
 class ProjectRead(_ProjectBase):
