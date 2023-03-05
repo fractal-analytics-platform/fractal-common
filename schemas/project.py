@@ -3,11 +3,9 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
-from pydantic import root_validator
 from pydantic import validator
-from sqlmodel import SQLModel
 
-from ._validator import validate_str
+from .base import Base
 
 
 __all__ = (
@@ -22,7 +20,7 @@ __all__ = (
 )
 
 
-class _ProjectBase(SQLModel):
+class _ProjectBase(Base):
     """
     Base class for Project
 
@@ -36,17 +34,11 @@ class _ProjectBase(SQLModel):
     project_dir: str
     read_only: bool = False
 
-    @root_validator(pre=True)
-    def not_empty_strings(cls, values):
-        for k, v in values.items():
-            if isinstance(v, str):
-                values[k] = validate_str(v, k)
-        return values
-
 
 class ProjectCreate(_ProjectBase):
     default_dataset_name: Optional[str] = "default"
 
+    # TODO test this
     @validator("default_dataset_name")
     def not_null(cls, value):
         """if value.strip()=="" then returns "default"
@@ -63,7 +55,7 @@ class ProjectRead(_ProjectBase):
 # DATASET
 
 
-class _DatasetBase(SQLModel):
+class _DatasetBase(Base):
     """
     Base class for Dataset
 
@@ -99,7 +91,7 @@ class DatasetRead(_DatasetBase):
 # RESOURCE
 
 
-class _ResourceBase(SQLModel):
+class _ResourceBase(Base):
     """
     Base class for Resource
     """

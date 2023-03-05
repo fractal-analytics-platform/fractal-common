@@ -2,8 +2,7 @@ from datetime import datetime
 from typing import List
 from typing import Optional
 
-from pydantic import root_validator
-from sqlmodel import SQLModel
+from .base import Base
 
 __all__ = (
     "ApplyWorkflowBase",
@@ -12,7 +11,7 @@ __all__ = (
 )
 
 
-class ApplyWorkflowBase(SQLModel):
+class ApplyWorkflowBase(Base):
     """
     Base class for ApplyWorkflow
 
@@ -32,13 +31,6 @@ class ApplyWorkflowBase(SQLModel):
     workflow_id: int
     overwrite_input: bool = False
     worker_init: Optional[str]
-
-    @root_validator(pre=True)
-    def positive_integers(cls, values):
-        for k, v in values.items():
-            if isinstance(v, int) and (v < 1):
-                raise ValueError(f"'{k}' cannot be less than 1 (given {v})")
-        return values
 
 
 class ApplyWorkflowCreate(ApplyWorkflowBase):

@@ -6,12 +6,10 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
-from pydantic import root_validator
 from pydantic import validator
 from sqlmodel import Field  # type: ignore
-from sqlmodel import SQLModel
 
-from ._validator import validate_str
+from .base import Base
 
 __all__ = (
     "TaskCreate",
@@ -24,7 +22,7 @@ __all__ = (
 )
 
 
-class _TaskBase(SQLModel):
+class _TaskBase(Base):
     """# TODO fix me
     Task base class
 
@@ -61,13 +59,6 @@ class TaskUpdate(_TaskBase):
     default_args: Optional[Dict[str, Any]]  # type:ignore
     meta: Optional[Dict[str, Any]]  # type:ignore
 
-    @root_validator(pre=True)
-    def not_empty_strings(cls, values):
-        for k, v in values.items():
-            if isinstance(v, str):
-                values[k] = validate_str(v, k)
-        return values
-
 
 class TaskImport(_TaskBase):
     pass
@@ -92,13 +83,6 @@ class TaskCreate(_TaskBase):
     output_type: str
     default_args: Optional[Dict[str, Any]] = Field(default={})
     meta: Optional[Dict[str, Any]] = Field(default={})
-
-    @root_validator(pre=True)
-    def not_empty_strings(cls, values):
-        for k, v in values.items():
-            if isinstance(v, str):
-                values[k] = validate_str(v, k)
-        return values
 
 
 class _TaskCollectBase(BaseModel):
