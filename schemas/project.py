@@ -61,7 +61,6 @@ class _DatasetBase(Base):
 
     Attributes:
         name: TBD
-        project_id: TBD
         type: TBD
         meta: TBD
         read_only: TBD
