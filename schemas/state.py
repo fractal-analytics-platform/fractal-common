@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Any
 from typing import Dict
+from typing import Optional
 
 from sqlmodel import SQLModel
 
@@ -34,4 +35,4 @@ class _StateBase(SQLModel):
 
 
 class StateRead(_StateBase):
-    id: int
+    id: Optional[int]
