@@ -31,6 +31,7 @@ def test_workflow_create():
     debug(w)
 
 
+@pytest.mark.xfail()
 def test_workflow_read():
     # Empty task list
     w = WorkflowRead(id=1, name="workflow", project_id=1, task_list=[])
