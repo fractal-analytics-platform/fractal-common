@@ -63,10 +63,6 @@ class WorkflowTaskExport(_WorkflowTaskBase):
 class WorkflowTaskUpdate(_WorkflowTaskBase):
     # Validators
     _order = validator("order", allow_reuse=True)(valint("order"))
-    _task_id = validator("task_id", allow_reuse=True)(valint("task_id"))
-    _workflow_id = validator("workflow_id", allow_reuse=True)(
-        valint("workflow_id")
-    )
 
     @validator("meta")
     def check_no_parallelisation_level(cls, m):
@@ -102,9 +98,6 @@ class WorkflowUpdate(_WorkflowBase):
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
-    _project_id = validator("project_id", allow_reuse=True)(
-        valint("project_id")
-    )
 
 
 class WorkflowImport(_WorkflowBase):
