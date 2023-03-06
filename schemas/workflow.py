@@ -35,14 +35,10 @@ class _WorkflowTaskBase(SQLModel):
 
 class WorkflowTaskCreate(_WorkflowTaskBase):
     task_id: int
-    workflow_id: Optional[int]
 
     # Validators
     _order = validator("order", allow_reuse=True)(valint("order", min_val=0))
     _task_id = validator("task_id", allow_reuse=True)(valint("task_id"))
-    _workflow_id = validator("workflow_id", allow_reuse=True)(
-        valint("workflow_id")
-    )
 
 
 class WorkflowTaskRead(_WorkflowTaskBase):
