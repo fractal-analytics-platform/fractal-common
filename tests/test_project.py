@@ -20,8 +20,6 @@ def test_dataset_create():
     # Empty-string argument
     with pytest.raises(ValidationError):
         d = DatasetCreate(name="  ")
-    # Wrong project_id
-    DatasetCreate(name="name", project_id=-1)
 
 
 def test_dataset_read():
