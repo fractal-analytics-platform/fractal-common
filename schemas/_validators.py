@@ -1,6 +1,7 @@
 def valstr(attribute: str):
     """
-    Check that a string attribute is not an empty string.
+    Check that a string attribute is not an empty string, and remove the
+    leading and trailing whitespace characters.
     """
 
     def val(string: str):
