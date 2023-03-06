@@ -1,7 +1,6 @@
 from pydantic import root_validator
 from sqlmodel import SQLModel
 
-
 class ValidatedSQLModel(SQLModel):
     """
     Validates and sanitizes attributes on construction for derived classes.
@@ -13,6 +12,8 @@ class ValidatedSQLModel(SQLModel):
 
     @root_validator(pre=True)
     def validate(cls, values):
+        if isinstance(values, dict) is False:
+            values = values.dict()
         for k, v in values.items():
             if (
                 (k in ["project_id", "workflow_id", "task_id", "dataset_id"])
