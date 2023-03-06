@@ -30,8 +30,5 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
 
-      - name: Install dependencies
-        run: pip install sqlmodel devtools pydantic fastapi-users pytest
-
       - name: Test with pytest
         run: pytest
