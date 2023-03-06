@@ -103,6 +103,9 @@ class WorkflowUpdate(_WorkflowBase):
 class WorkflowImport(_WorkflowBase):
     task_list: List[WorkflowTaskImport]
 
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+
 
 class WorkflowExport(_WorkflowBase):
     task_list: List[WorkflowTaskExport]

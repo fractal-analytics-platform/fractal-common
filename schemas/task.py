@@ -57,8 +57,8 @@ class TaskUpdate(_TaskBase):
     output_type: Optional[str]
     command: Optional[str]
     source: Optional[str]
-    default_args: Optional[Dict[str, Any]]  # type:ignore
-    meta: Optional[Dict[str, Any]]  # type:ignore
+    default_args: Optional[Dict[str, Any]]
+    meta: Optional[Dict[str, Any]]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -73,7 +73,8 @@ class TaskUpdate(_TaskBase):
 
 
 class TaskImport(_TaskBase):
-    pass
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _source = validator("source", allow_reuse=True)(valstr("source"))
 
 
 class TaskExport(_TaskBase):

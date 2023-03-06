@@ -69,8 +69,8 @@ class _DatasetBase(SQLModel):
 
 
 class DatasetUpdate(_DatasetBase):
-    name: Optional[str]  # type:ignore
-    meta: Optional[Dict[str, Any]] = None  # type:ignore
+    name: Optional[str]
+    meta: Optional[Dict[str, Any]] = None
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
