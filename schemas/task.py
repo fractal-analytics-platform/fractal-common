@@ -10,7 +10,7 @@ from pydantic import validator
 from sqlmodel import Field  # type: ignore
 from sqlmodel import SQLModel
 
-from .validator import valstr
+from .validators import valstr
 
 __all__ = (
     "TaskCreate",

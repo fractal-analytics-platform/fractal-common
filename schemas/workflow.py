@@ -9,8 +9,8 @@ from sqlmodel import SQLModel
 from .task import TaskExport
 from .task import TaskImport
 from .task import TaskRead
-from .validator import valint
-from .validator import valstr
+from .validators import valint
+from .validators import valstr
 
 
 __all__ = (

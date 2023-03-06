@@ -5,8 +5,8 @@ from typing import Optional
 from pydantic import validator
 from sqlmodel import SQLModel
 
-from .validator import valint
-from .validator import valstr
+from .validators import valint
+from .validators import valstr
 
 __all__ = (
     "ApplyWorkflowBase",
