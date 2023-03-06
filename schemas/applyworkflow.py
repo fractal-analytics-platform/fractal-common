@@ -2,7 +2,11 @@ from datetime import datetime
 from typing import List
 from typing import Optional
 
-from .validator import ValidatedSQLModel
+from pydantic import validator
+from sqlmodel import SQLModel
+
+from .validator import valint
+from .validator import valstr
 
 __all__ = (
     "ApplyWorkflowBase",
@@ -11,7 +15,7 @@ __all__ = (
 )
 
 
-class ApplyWorkflowBase(ValidatedSQLModel):
+class ApplyWorkflowBase(SQLModel):
     """
     Base class for ApplyWorkflow
 
@@ -34,7 +38,23 @@ class ApplyWorkflowBase(ValidatedSQLModel):
 
 
 class ApplyWorkflowCreate(ApplyWorkflowBase):
-    pass
+
+    # Validators
+    _project_id = validator("project_id", allow_reuse=True)(
+        valint("project_id")
+    )
+    _input_dataset_id = validator("input_dataset_id", allow_reuse=True)(
+        valint("input_dataset_id")
+    )
+    _output_dataset_id = validator("output_dataset_id", allow_reuse=True)(
+        valint("output_dataset_id")
+    )
+    _workflow_id = validator("workflow_id", allow_reuse=True)(
+        valint("workflow_id")
+    )
+    _worker_init = validator("worker_init", allow_reuse=True)(
+        valstr("worker_init")
+    )
 
 
 class ApplyWorkflowRead(ApplyWorkflowBase):

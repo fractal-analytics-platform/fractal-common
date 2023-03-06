@@ -8,8 +8,9 @@ from typing import Optional
 from pydantic import BaseModel
 from pydantic import validator
 from sqlmodel import Field  # type: ignore
+from sqlmodel import SQLModel
 
-from .validator import ValidatedSQLModel
+from .validator import valstr
 
 __all__ = (
     "TaskCreate",
@@ -22,7 +23,7 @@ __all__ = (
 )
 
 
-class _TaskBase(ValidatedSQLModel):
+class _TaskBase(SQLModel):
     """# TODO fix me
     Task base class
 
@@ -59,6 +60,17 @@ class TaskUpdate(_TaskBase):
     default_args: Optional[Dict[str, Any]]  # type:ignore
     meta: Optional[Dict[str, Any]]  # type:ignore
 
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _input_type = validator("input_type", allow_reuse=True)(
+        valstr("input_type")
+    )
+    _output_type = validator("output_type", allow_reuse=True)(
+        valstr("output_type")
+    )
+    _command = validator("command", allow_reuse=True)(valstr("command"))
+    _source = validator("source", allow_reuse=True)(valstr("source"))
+
 
 class TaskImport(_TaskBase):
     pass
@@ -83,6 +95,17 @@ class TaskCreate(_TaskBase):
     output_type: str
     default_args: Optional[Dict[str, Any]] = Field(default={})
     meta: Optional[Dict[str, Any]] = Field(default={})
+
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _input_type = validator("input_type", allow_reuse=True)(
+        valstr("input_type")
+    )
+    _output_type = validator("output_type", allow_reuse=True)(
+        valstr("output_type")
+    )
+    _command = validator("command", allow_reuse=True)(valstr("command"))
+    _source = validator("source", allow_reuse=True)(valstr("source"))
 
 
 class _TaskCollectBase(BaseModel):

@@ -2,7 +2,8 @@ from datetime import datetime
 from typing import Any
 from typing import Dict
 
-from .validator import ValidatedSQLModel
+from sqlmodel import SQLModel
+
 
 __all__ = (
     "_StateBase",
@@ -10,7 +11,7 @@ __all__ = (
 )
 
 
-class _StateBase(ValidatedSQLModel):
+class _StateBase(SQLModel):
     """
     Base class for `State`
 

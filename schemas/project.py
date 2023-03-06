@@ -4,8 +4,10 @@ from typing import List
 from typing import Optional
 
 from pydantic import Field
+from pydantic import validator
+from sqlmodel import SQLModel
 
-from .validator import ValidatedSQLModel
+from .validator import valstr
 
 
 __all__ = (
@@ -20,34 +22,36 @@ __all__ = (
 )
 
 
-class _ProjectBase(ValidatedSQLModel):
-    """
-    Base class for Project
+# RESOURCE
 
-    Attributes:
-        name: TBD
-        project_dir: TBD
-        read_only: TBD
+
+class _ResourceBase(SQLModel):
+    """
+    Base class for Resource
     """
 
-    name: str
-    project_dir: str
-    read_only: bool = False
+    path: str
 
 
-class ProjectCreate(_ProjectBase):
-    default_dataset_name: Optional[str] = "default"
+class ResourceCreate(_ResourceBase):
+    # Validators
+    _path = validator("path", allow_reuse=True)(valstr("path"))
 
 
-class ProjectRead(_ProjectBase):
+class ResourceUpdate(_ResourceBase):
+    # Validators
+    _path = validator("path", allow_reuse=True)(valstr("path"))
+
+
+class ResourceRead(_ResourceBase):
     id: int
-    dataset_list: List["DatasetRead"] = []
+    dataset_id: int
 
 
 # DATASET
 
 
-class _DatasetBase(ValidatedSQLModel):
+class _DatasetBase(SQLModel):
     """
     Base class for Dataset
 
@@ -68,40 +72,54 @@ class DatasetUpdate(_DatasetBase):
     name: Optional[str]  # type:ignore
     meta: Optional[Dict[str, Any]] = None  # type:ignore
 
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _type = validator("type", allow_reuse=True)(valstr("type"))
+
 
 class DatasetCreate(_DatasetBase):
-    pass
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _type = validator("type", allow_reuse=True)(valstr("type"))
 
 
 class DatasetRead(_DatasetBase):
     id: int
-    resource_list: List["ResourceRead"]
+    resource_list: List[ResourceRead]
     project_id: int
 
 
-# RESOURCE
+# PROJECT
 
 
-class _ResourceBase(ValidatedSQLModel):
+class _ProjectBase(SQLModel):
     """
-    Base class for Resource
+    Base class for Project
+
+    Attributes:
+        name: TBD
+        project_dir: TBD
+        read_only: TBD
     """
 
-    path: str
+    name: str
+    project_dir: str
+    read_only: bool = False
 
 
-class ResourceCreate(_ResourceBase):
-    pass
+class ProjectCreate(_ProjectBase):
+    default_dataset_name: Optional[str] = "default"
+
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _project_dir = validator("project_dir", allow_reuse=True)(
+        valstr("project_dir")
+    )
+    _default_dataset_name = validator(
+        "default_dataset_name", allow_reuse=True
+    )(valstr("default_dataset_name"))
 
 
-class ResourceUpdate(_ResourceBase):
-    pass
-
-
-class ResourceRead(_ResourceBase):
+class ProjectRead(_ProjectBase):
     id: int
-    dataset_id: int
-
-
-ProjectRead.update_forward_refs()
-DatasetRead.update_forward_refs()
+    dataset_list: List[DatasetRead] = []
