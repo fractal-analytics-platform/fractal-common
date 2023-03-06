@@ -5,6 +5,8 @@ def valstr(attribute: str):
     """
 
     def val(string: str):
+        if string is None:
+            raise ValueError(f"String attribute '{attribute}' cannot be None")
         s = string.strip()
         if not s:
             raise ValueError(f"String attribute '{attribute}' cannot be empty")
@@ -20,6 +22,8 @@ def valint(attribute: str, min_val: int = 1):
     """
 
     def val(integer: int):
+        if integer is None:
+            raise ValueError(f"Integer attribute '{attribute}' cannot be None")
         if integer < min_val:
             raise ValueError(
                 f"Integer attribute '{attribute}' cannot be less than "

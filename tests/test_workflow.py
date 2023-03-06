@@ -25,6 +25,8 @@ def test_workflow_task_create():
     t = WorkflowTaskCreate(task_id=1, order=0)
     with pytest.raises(ValidationError):
         WorkflowTaskCreate(task_id=1, order=-1)
+    with pytest.raises(ValidationError):
+        WorkflowTaskCreate(task_id=1, order=None)
 
 
 def test_workflow_task_update():
