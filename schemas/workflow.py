@@ -94,7 +94,7 @@ class WorkflowCreate(_WorkflowBase):
 
 
 class WorkflowUpdate(_WorkflowBase):
-    name: Optional[str]  # type: ignore
+    name: Optional[str]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
