@@ -3,6 +3,8 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
+from pydantic import Field
+
 from .validator import ValidatedSQLModel
 
 
@@ -58,7 +60,7 @@ class _DatasetBase(ValidatedSQLModel):
 
     name: str
     type: Optional[str]
-    meta: Dict[str, Any] = {}
+    meta: Dict[str, Any] = Field(default={})
     read_only: Optional[bool] = False
 
 
