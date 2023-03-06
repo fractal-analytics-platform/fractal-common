@@ -1,7 +1,7 @@
 from devtools import debug
 
-from . import DatasetRead
-from . import ResourceRead
+from schemas import DatasetRead
+from schemas import ResourceRead
 
 
 def test_dataset_read():
@@ -11,4 +11,6 @@ def test_dataset_read():
     debug(rs)
     # The following statement fails
     # dsread = DatasetRead(id=1, project_id=1, resource_list=[rs], name="n")
-    # debug(dsread)
+
+
+# debug(dsread)
