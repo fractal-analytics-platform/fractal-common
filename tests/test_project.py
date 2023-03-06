@@ -20,12 +20,16 @@ def test_dataset_create():
     # Empty-string argument
     with pytest.raises(ValidationError):
         d = DatasetCreate(name="  ")
+    # Wrong project_id
+    DatasetCreate(name="name", project_id=-1)
 
 
 def test_dataset_read():
+    # Successful creation - empty resource_list
     d = DatasetRead(id=1, project_id=1, resource_list=[], name="n")
     debug(d)
-    r = ResourceRead(id=1, dataset_id=1, path="/something")
-    debug(r)
-    d2 = DatasetRead(id=1, project_id=1, resource_list=[r], name="n")
-    debug(d2)
+    # Successful creation - non-trivial resource_list
+    r1 = ResourceRead(id=1, dataset_id=1, path="/something")
+    r2 = ResourceRead(id=1, dataset_id=1, path="/something")
+    d = DatasetRead(id=1, project_id=1, resource_list=[r1, r2], name="n")
+    debug(d)
