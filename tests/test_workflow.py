@@ -20,6 +20,11 @@ def test_workflow_task_create():
     # Missing arguments
     with pytest.raises(ValidationError):
         WorkflowTaskCreate(task_id=1, workflow_id=-1)
+    # Several values of order
+    t = WorkflowTaskCreate(task_id=1, workflow_id=1, order=1)
+    t = WorkflowTaskCreate(task_id=1, workflow_id=1, order=0)
+    with pytest.raises(ValidationError):
+        WorkflowTaskCreate(task_id=1, workflow_id=1, order=-1)
 
 
 def test_workflow_task_update():
