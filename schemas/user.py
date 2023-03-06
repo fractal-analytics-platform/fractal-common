@@ -26,5 +26,7 @@ class UserCreate(schemas.BaseUserCreate):
     def not_empty_str(cls, value):
         s = value.strip()
         if not s:
-            raise ValueError("'slurm_user' cannot be empty")
+            raise ValueError(
+                "'slurm_user' attribute cannot be an empty string"
+            )
         return s
