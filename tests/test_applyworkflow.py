@@ -5,7 +5,6 @@ from pydantic.error_wrappers import ValidationError
 from schemas import ApplyWorkflowCreate
 
 
-@pytest.mark.xfail(reason="Not implemented yet", strict=True)
 def test_apply_workflow_create():
     # Valid ApplyWorkflowCreate instance / without output_dataset_id
     valid_args = dict(
