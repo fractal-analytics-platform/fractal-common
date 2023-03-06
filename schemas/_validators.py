@@ -13,17 +13,17 @@ def valstr(attribute: str):
     return val
 
 
-def valint(attribute: str):
+def valint(attribute: str, min_val: int = 1):
     """
-    Check that an integer attribute (meant to be the ID of a database entry) is
-    greater or equal to 1.
+    Check that an integer attribute (e.g. if it is meant to be the ID of a
+    database entry) is greater or equal to min_val.
     """
 
     def val(integer: int):
-        if integer < 1:
+        if integer < min_val:
             raise ValueError(
-                f"Integer attribute '{attribute}' cannot be less than 1 "
-                f"(given {integer})"
+                f"Integer attribute '{attribute}' cannot be less than "
+                f"{min_val} (given {integer})"
             )
         return integer
 

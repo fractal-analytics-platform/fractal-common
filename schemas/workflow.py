@@ -38,7 +38,7 @@ class WorkflowTaskCreate(_WorkflowTaskBase):
     workflow_id: Optional[int]
 
     # Validators
-    _order = validator("order", allow_reuse=True)(valint("order"))
+    _order = validator("order", allow_reuse=True)(valint("order", min_val=0))
     _task_id = validator("task_id", allow_reuse=True)(valint("task_id"))
     _workflow_id = validator("workflow_id", allow_reuse=True)(
         valint("workflow_id")
@@ -62,7 +62,7 @@ class WorkflowTaskExport(_WorkflowTaskBase):
 
 class WorkflowTaskUpdate(_WorkflowTaskBase):
     # Validators
-    _order = validator("order", allow_reuse=True)(valint("order"))
+    _order = validator("order", allow_reuse=True)(valint("order", min_val=0))
 
     @validator("meta")
     def check_no_parallelisation_level(cls, m):
