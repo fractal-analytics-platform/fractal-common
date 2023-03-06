@@ -6,7 +6,8 @@ from typing import Optional
 from pydantic import validator
 from sqlmodel import SQLModel
 
-from ._validator import validate_str
+from ._validators import valint
+from ._validators import valstr
 from .task import TaskExport
 from .task import TaskImport
 from .task import TaskRead
@@ -36,11 +37,12 @@ class WorkflowTaskCreate(_WorkflowTaskBase):
     task_id: int
     workflow_id: Optional[int]
 
-    @validator("task_id", "workflow_id")
-    def positive(cls, _id):
-        if (_id is not None) and _id < 1:
-            raise ValueError(f"IDs must be positive integers, given {_id}")
-        return _id
+    # Validators
+    _order = validator("order", allow_reuse=True)(valint("order"))
+    _task_id = validator("task_id", allow_reuse=True)(valint("task_id"))
+    _workflow_id = validator("workflow_id", allow_reuse=True)(
+        valint("workflow_id")
+    )
 
 
 class WorkflowTaskRead(_WorkflowTaskBase):
@@ -59,6 +61,9 @@ class WorkflowTaskExport(_WorkflowTaskBase):
 
 
 class WorkflowTaskUpdate(_WorkflowTaskBase):
+    # Validators
+    _order = validator("order", allow_reuse=True)(valint("order"))
+
     @validator("meta")
     def check_no_parallelisation_level(cls, m):
         if "parallelization_level" in m:
@@ -81,24 +86,25 @@ class WorkflowRead(_WorkflowBase):
 class WorkflowCreate(_WorkflowBase):
     project_id: int
 
-    @validator("project_id")
-    def positive(cls, _id):
-        if _id < 1:
-            raise ValueError(f"IDs must be positive integers, given {_id}")
-        return _id
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _project_id = validator("project_id", allow_reuse=True)(
+        valint("project_id")
+    )
 
 
 class WorkflowUpdate(_WorkflowBase):
-    name: Optional[str]  # type: ignore
+    name: Optional[str]
 
-    @validator("name")
-    def not_empty_str(cls, value):
-        v = validate_str(value, "name")
-        return v
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
 
 
 class WorkflowImport(_WorkflowBase):
     task_list: List[WorkflowTaskImport]
+
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
 
 
 class WorkflowExport(_WorkflowBase):

@@ -6,12 +6,11 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
-from pydantic import root_validator
 from pydantic import validator
-from sqlmodel import Field  # type: ignore
+from sqlmodel import Field
 from sqlmodel import SQLModel
 
-from ._validator import validate_str
+from ._validators import valstr
 
 __all__ = (
     "TaskCreate",
@@ -58,19 +57,24 @@ class TaskUpdate(_TaskBase):
     output_type: Optional[str]
     command: Optional[str]
     source: Optional[str]
-    default_args: Optional[Dict[str, Any]]  # type:ignore
-    meta: Optional[Dict[str, Any]]  # type:ignore
+    default_args: Optional[Dict[str, Any]]
+    meta: Optional[Dict[str, Any]]
 
-    @root_validator(pre=True)
-    def not_empty_strings(cls, values):
-        for k, v in values.items():
-            if isinstance(v, str):
-                values[k] = validate_str(v, k)
-        return values
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _input_type = validator("input_type", allow_reuse=True)(
+        valstr("input_type")
+    )
+    _output_type = validator("output_type", allow_reuse=True)(
+        valstr("output_type")
+    )
+    _command = validator("command", allow_reuse=True)(valstr("command"))
+    _source = validator("source", allow_reuse=True)(valstr("source"))
 
 
 class TaskImport(_TaskBase):
-    pass
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _source = validator("source", allow_reuse=True)(valstr("source"))
 
 
 class TaskExport(_TaskBase):
@@ -93,12 +97,16 @@ class TaskCreate(_TaskBase):
     default_args: Optional[Dict[str, Any]] = Field(default={})
     meta: Optional[Dict[str, Any]] = Field(default={})
 
-    @root_validator(pre=True)
-    def not_empty_strings(cls, values):
-        for k, v in values.items():
-            if isinstance(v, str):
-                values[k] = validate_str(v, k)
-        return values
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _input_type = validator("input_type", allow_reuse=True)(
+        valstr("input_type")
+    )
+    _output_type = validator("output_type", allow_reuse=True)(
+        valstr("output_type")
+    )
+    _command = validator("command", allow_reuse=True)(valstr("command"))
+    _source = validator("source", allow_reuse=True)(valstr("source"))
 
 
 class _TaskCollectBase(BaseModel):

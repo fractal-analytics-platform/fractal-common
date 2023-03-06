@@ -3,10 +3,11 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
+from pydantic import Field
 from pydantic import validator
 from sqlmodel import SQLModel
 
-from ._validator import validate_str
+from ._validators import valstr
 
 
 __all__ = (
@@ -19,6 +20,76 @@ __all__ = (
     "ResourceRead",
     "ResourceUpdate",
 )
+
+
+# RESOURCE
+
+
+class _ResourceBase(SQLModel):
+    """
+    Base class for Resource
+    """
+
+    path: str
+
+
+class ResourceCreate(_ResourceBase):
+    # Validators
+    _path = validator("path", allow_reuse=True)(valstr("path"))
+
+
+class ResourceUpdate(_ResourceBase):
+    # Validators
+    _path = validator("path", allow_reuse=True)(valstr("path"))
+
+
+class ResourceRead(_ResourceBase):
+    id: int
+    dataset_id: int
+
+
+# DATASET
+
+
+class _DatasetBase(SQLModel):
+    """
+    Base class for Dataset
+
+    Attributes:
+        name: TBD
+        type: TBD
+        meta: TBD
+        read_only: TBD
+    """
+
+    name: str
+    type: Optional[str]
+    meta: Dict[str, Any] = Field(default={})
+    read_only: Optional[bool] = False
+
+
+class DatasetUpdate(_DatasetBase):
+    name: Optional[str]
+    meta: Optional[Dict[str, Any]] = None
+
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _type = validator("type", allow_reuse=True)(valstr("type"))
+
+
+class DatasetCreate(_DatasetBase):
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _type = validator("type", allow_reuse=True)(valstr("type"))
+
+
+class DatasetRead(_DatasetBase):
+    id: int
+    resource_list: List[ResourceRead]
+    project_id: int
+
+
+# PROJECT
 
 
 class _ProjectBase(SQLModel):
@@ -39,80 +110,16 @@ class _ProjectBase(SQLModel):
 class ProjectCreate(_ProjectBase):
     default_dataset_name: Optional[str] = "default"
 
-    @validator("project_dir")
-    def not_empty_str(cls, value):
-        v = validate_str(value, "project_dir")
-        return v
-
-    @validator("default_dataset_name")
-    def not_null(cls, value):
-        return value or "default"
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _project_dir = validator("project_dir", allow_reuse=True)(
+        valstr("project_dir")
+    )
+    _default_dataset_name = validator(
+        "default_dataset_name", allow_reuse=True
+    )(valstr("default_dataset_name"))
 
 
 class ProjectRead(_ProjectBase):
     id: int
-    dataset_list: List["DatasetRead"] = []
-
-
-# DATASET
-
-
-class _DatasetBase(SQLModel):
-    """
-    Base class for Dataset
-
-    Attributes:
-        name: TBD
-        project_id: TBD
-        type: TBD
-        meta: TBD
-        read_only: TBD
-    """
-
-    name: str
-    project_id: Optional[int]
-    type: Optional[str]
-    meta: Dict[str, Any] = {}
-    read_only: Optional[bool] = False
-
-
-class DatasetUpdate(_DatasetBase):
-    name: Optional[str]  # type:ignore
-    meta: Optional[Dict[str, Any]] = None  # type:ignore
-
-
-class DatasetCreate(_DatasetBase):
-    pass
-
-
-class DatasetRead(_DatasetBase):
-    id: int
-    resource_list: List["ResourceRead"]
-
-
-# RESOURCE
-
-
-class _ResourceBase(SQLModel):
-    """
-    Base class for Resource
-    """
-
-    path: str
-
-
-class ResourceCreate(_ResourceBase):
-    pass
-
-
-class ResourceUpdate(_ResourceBase):
-    pass
-
-
-class ResourceRead(_ResourceBase):
-    id: int
-    dataset_id: int
-
-
-ProjectRead.update_forward_refs()
-DatasetRead.update_forward_refs()
+    dataset_list: List[DatasetRead] = []
