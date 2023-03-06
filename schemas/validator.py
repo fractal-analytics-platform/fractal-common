@@ -1,7 +1,6 @@
 from pydantic import root_validator
 from sqlmodel import SQLModel
 
-
 class ValidatedSQLModel(SQLModel):
     """
     Validates and sanitizes attributes on construction for derived classes.
