@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from pydantic import validator
 from sqlmodel import Field  # type: ignore
 
-from .base import Base
+from .validator import ValidatedSQLModel
 
 __all__ = (
     "TaskCreate",
@@ -22,7 +22,7 @@ __all__ = (
 )
 
 
-class _TaskBase(Base):
+class _TaskBase(ValidatedSQLModel):
     """# TODO fix me
     Task base class
 

@@ -5,10 +5,10 @@ from typing import Optional
 
 from pydantic import validator
 
-from .base import Base
 from .task import TaskExport
 from .task import TaskImport
 from .task import TaskRead
+from .validator import ValidatedSQLModel
 
 
 __all__ = (
@@ -25,7 +25,7 @@ __all__ = (
 )
 
 
-class _WorkflowTaskBase(Base):
+class _WorkflowTaskBase(ValidatedSQLModel):
     order: Optional[int]
     meta: Optional[Dict[str, Any]] = None
     args: Optional[Dict[str, Any]] = None
@@ -61,7 +61,7 @@ class WorkflowTaskUpdate(_WorkflowTaskBase):
         return m
 
 
-class _WorkflowBase(Base):
+class _WorkflowBase(ValidatedSQLModel):
     name: str
 
 

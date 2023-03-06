@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 from typing import Optional
 
-from .base import Base
+from .validator import ValidatedSQLModel
 
 __all__ = (
     "ApplyWorkflowBase",
@@ -11,7 +11,7 @@ __all__ = (
 )
 
 
-class ApplyWorkflowBase(Base):
+class ApplyWorkflowBase(ValidatedSQLModel):
     """
     Base class for ApplyWorkflow
 

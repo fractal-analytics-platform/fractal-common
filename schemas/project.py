@@ -3,7 +3,7 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
-from .base import Base
+from .validator import ValidatedSQLModel
 
 
 __all__ = (
@@ -18,7 +18,7 @@ __all__ = (
 )
 
 
-class _ProjectBase(Base):
+class _ProjectBase(ValidatedSQLModel):
     """
     Base class for Project
 
@@ -45,7 +45,7 @@ class ProjectRead(_ProjectBase):
 # DATASET
 
 
-class _DatasetBase(Base):
+class _DatasetBase(ValidatedSQLModel):
     """
     Base class for Dataset
 
@@ -74,13 +74,13 @@ class DatasetCreate(_DatasetBase):
 class DatasetRead(_DatasetBase):
     id: int
     resource_list: List["ResourceRead"]
-    project_id: Optional[int]
+    project_id: int
 
 
 # RESOURCE
 
 
-class _ResourceBase(Base):
+class _ResourceBase(ValidatedSQLModel):
     """
     Base class for Resource
     """
