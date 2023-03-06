@@ -2,10 +2,13 @@ import pytest
 from devtools import debug
 from pydantic.error_wrappers import ValidationError
 
+from schemas import TaskImport
 from schemas import TaskRead
 from schemas import WorkflowCreate
+from schemas import WorkflowImport
 from schemas import WorkflowRead
 from schemas import WorkflowTaskCreate
+from schemas import WorkflowTaskImport
 from schemas import WorkflowTaskRead
 from schemas import WorkflowTaskUpdate
 
@@ -20,9 +23,9 @@ def test_workflow_task_create():
 
 
 def test_workflow_task_update():
-    # Success
+    # Successful creation
     t = WorkflowTaskUpdate(meta=dict(something="else"))
-    # Failure
+    # Forbidden key-value update
     with pytest.raises(ValidationError):
         t = WorkflowTaskUpdate(meta=dict(parallelization_level="new"))
     debug(t)
@@ -31,6 +34,17 @@ def test_workflow_task_update():
 def test_workflow_create():
     w = WorkflowCreate(name="workflow", project_id=1)
     debug(w)
+
+
+def test_workflow_import():
+    # Successful creation
+    t = TaskImport(name="name", source="source")
+    wft = WorkflowTaskImport(task=t)
+    w = WorkflowImport(name="workflow", task_list=[wft])
+    debug(w)
+    # Empty-string argument
+    with pytest.raises(ValidationError):
+        WorkflowImport(name=" ", task_list=[wft])
 
 
 def test_workflow_read_empty_task_list():
