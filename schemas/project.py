@@ -7,7 +7,7 @@ from pydantic import Field
 from pydantic import validator
 from sqlmodel import SQLModel
 
-from .validators import valstr
+from ._validators import valstr
 
 
 __all__ = (

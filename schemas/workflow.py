@@ -6,11 +6,11 @@ from typing import Optional
 from pydantic import validator
 from sqlmodel import SQLModel
 
+from ._validators import valint
+from ._validators import valstr
 from .task import TaskExport
 from .task import TaskImport
 from .task import TaskRead
-from .validators import valint
-from .validators import valstr
 
 
 __all__ = (
