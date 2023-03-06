@@ -7,17 +7,22 @@ from schemas import ApplyWorkflowCreate
 
 @pytest.mark.xfail(reason="Not implemented yet", strict=True)
 def test_apply_workflow_create():
-    # Valid ApplyWorkflowCreate instance
+    # Valid ApplyWorkflowCreate instance / without output_dataset_id
     valid_args = dict(
         project_id=1,
         input_dataset_id=1,
-        output_dataset_id=2,
         workflow_id=3,
         overwrite_input=True,
         worker_init="WORKER INIT",
     )
     job = ApplyWorkflowCreate(**valid_args)
     debug(job)
+    assert job.output_dataset_id is None
+    # Valid ApplyWorkflowCreate instance / with output_dataset_id
+    valid_args["output_dataset_id"] = 3
+    job = ApplyWorkflowCreate(**valid_args)
+    debug(job)
+    assert job.output_dataset_id
     # Multiple cases of invalid arguments
     for key in [
         "project_id",
