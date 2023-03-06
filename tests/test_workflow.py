@@ -2,9 +2,11 @@ import pytest
 from devtools import debug
 from pydantic.error_wrappers import ValidationError
 
+from schemas import TaskRead
 from schemas import WorkflowCreate
 from schemas import WorkflowRead
 from schemas import WorkflowTaskCreate
+from schemas import WorkflowTaskRead
 from schemas import WorkflowTaskUpdate
 
 
@@ -31,13 +33,27 @@ def test_workflow_create():
     debug(w)
 
 
-@pytest.mark.xfail()
-def test_workflow_read():
-    # Empty task list
+def test_workflow_read_empty_task_list():
     w = WorkflowRead(id=1, name="workflow", project_id=1, task_list=[])
     debug(w)
-    # Non-empty task list
-    t1 = WorkflowTaskCreate(task_id=1, workflow_id=1)
-    t2 = WorkflowTaskCreate(task_id=1, workflow_id=1)
-    w = WorkflowRead(id=1, name="workflow", project_id=1, task_list=[t1, t2])
+
+
+def test_workflow_read_non_empty_task_list():
+    # Create a TaskRead
+    t1 = TaskRead(
+        id=9,
+        name="name",
+        source="source",
+        command="command",
+        input_type="input_type",
+        output_type="output_type",
+        meta=dict(something="else"),
+    )
+    # Create two WorkflowTaskRead
+    wft1 = WorkflowTaskRead(id=1, task_id=1, workflow_id=1, task=t1)
+    wft2 = WorkflowTaskRead(id=2, task_id=1, workflow_id=1, task=t1)
+    # Create a WorkflowRead
+    w = WorkflowRead(
+        id=1, name="workflow", project_id=1, task_list=[wft1, wft2]
+    )
     debug(w)
