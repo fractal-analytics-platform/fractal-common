@@ -65,12 +65,13 @@ class _DatasetBase(SQLModel):
     name: str
     type: Optional[str]
     meta: Dict[str, Any] = Field(default={})
-    read_only: Optional[bool] = False
+    read_only: bool = False
 
 
 class DatasetUpdate(_DatasetBase):
     name: Optional[str]
     meta: Optional[Dict[str, Any]] = None
+    read_only: Optional[bool]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -87,6 +88,7 @@ class DatasetRead(_DatasetBase):
     id: int
     resource_list: List[ResourceRead]
     project_id: int
+    read_only: bool
 
 
 # PROJECT
