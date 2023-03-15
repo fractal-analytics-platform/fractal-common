@@ -13,6 +13,7 @@ from ._validators import valstr
 __all__ = (
     "ProjectCreate",
     "ProjectRead",
+    "ProjectUpdate",
     "DatasetUpdate",
     "DatasetCreate",
     "DatasetRead",
