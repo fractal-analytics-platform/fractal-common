@@ -125,3 +125,15 @@ class ProjectCreate(_ProjectBase):
 class ProjectRead(_ProjectBase):
     id: int
     dataset_list: List[DatasetRead] = []
+
+
+class ProjectUpdate(_ProjectBase):
+    name: Optional[str]
+    project_dir: Optional[str]
+    read_only: Optional[bool]
+
+    # Validators
+    _name = validator("name", allow_reuse=True)(valstr("name"))
+    _project_dir = validator("project_dir", allow_reuse=True)(
+        valstr("project_dir")
+    )
