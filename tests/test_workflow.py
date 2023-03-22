@@ -82,8 +82,8 @@ def test_workflow_read_non_empty_task_list():
 
 
 def test_workflow_update():
-    WorkflowUpdate(name="workflow", order_task_list=[0, 1, 3, 2])
+    WorkflowUpdate(name="workflow", order_permutation=[0, 1, 3, 2])
     WorkflowUpdate(name="workflow")
-    WorkflowUpdate(order_task_list=[0, 1, 3, 2])
+    WorkflowUpdate(order_permutation=[0, 1, 3, 2])
     with pytest.raises(ValidationError):
-        WorkflowUpdate(name="workflow", order_task_list=[0, 1, 3])
+        WorkflowUpdate(name="workflow", order_permutation=[0, 1, 3])
