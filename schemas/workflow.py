@@ -95,7 +95,7 @@ class WorkflowUpdate(_WorkflowBase):
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
 
-    @validator("order_task_list")
+    @validator("order_permutation")
     def check_permutation(cls, value):
         if set(value) != set(range(len(value))):
             raise ValueError(
