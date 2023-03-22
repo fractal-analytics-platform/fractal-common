@@ -90,6 +90,7 @@ class WorkflowCreate(_WorkflowBase):
 
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]
+    order_task_list: Optional[List[int]]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
