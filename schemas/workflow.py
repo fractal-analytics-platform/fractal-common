@@ -28,14 +28,14 @@ __all__ = (
 
 
 class _WorkflowTaskBase(SQLModel):
-    order: Optional[int]
+
     meta: Optional[Dict[str, Any]] = None
     args: Optional[Dict[str, Any]] = None
 
 
 class WorkflowTaskCreate(_WorkflowTaskBase):
+    order: Optional[int]
     task_id: int
-
     # Validators
     _order = validator("order", allow_reuse=True)(valint("order", min_val=0))
     _task_id = validator("task_id", allow_reuse=True)(valint("task_id"))
@@ -43,6 +43,7 @@ class WorkflowTaskCreate(_WorkflowTaskBase):
 
 class WorkflowTaskRead(_WorkflowTaskBase):
     id: int
+    order: Optional[int]
     workflow_id: int
     task_id: int
     task: TaskRead
@@ -58,8 +59,6 @@ class WorkflowTaskExport(_WorkflowTaskBase):
 
 class WorkflowTaskUpdate(_WorkflowTaskBase):
     # Validators
-    _order = validator("order", allow_reuse=True)(valint("order", min_val=0))
-
     @validator("meta")
     def check_no_parallelisation_level(cls, m):
         if "parallelization_level" in m:
@@ -91,6 +90,7 @@ class WorkflowCreate(_WorkflowBase):
 
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]
+    order_task_list: Optional[List[int]]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
