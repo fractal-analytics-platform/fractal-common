@@ -90,19 +90,19 @@ class WorkflowCreate(_WorkflowBase):
 
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]
-    order_task_list: Optional[List[int]]
+    order_permutation: Optional[List[int]]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
 
     @validator("order_task_list")
-    def check_permutation(cls, task_list):
-        if set(task_list) != set(range(len(task_list))):
+    def check_permutation(cls, value):
+        if set(value) != set(range(len(value))):
             raise ValueError(
                 "`order_task_list` must be a permutation of "
-                f"{list(range(len(task_list)))} (given {task_list})"
+                f"{list(range(len(value)))} (given {value})"
             )
-        return task_list
+        return value
 
 
 class WorkflowImport(_WorkflowBase):
