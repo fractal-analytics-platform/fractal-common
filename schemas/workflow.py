@@ -97,10 +97,10 @@ class WorkflowUpdate(_WorkflowBase):
 
     @validator("order_task_list")
     def check_permutation(cls, task_list):
-        if set(task_list) != set([i for i in range(len(task_list))]):
+        if set(task_list) != set(range(len(task_list))):
             raise ValueError(
                 "`order_task_list` must be a permutation of "
-                f"{[i for i in range(len(task_list))]} (given {task_list})"
+                f"{list(range(len(task_list)))} (given {task_list})"
             )
         return task_list
 
