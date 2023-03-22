@@ -99,7 +99,7 @@ class WorkflowUpdate(_WorkflowBase):
     def check_permutation(cls, value):
         if set(value) != set(range(len(value))):
             raise ValueError(
-                "`order_task_list` must be a permutation of "
+                "`order_permutation` must be a permutation of "
                 f"{list(range(len(value)))} (given {value})"
             )
         return value
