@@ -11,6 +11,7 @@ from schemas import WorkflowTaskCreate
 from schemas import WorkflowTaskImport
 from schemas import WorkflowTaskRead
 from schemas import WorkflowTaskUpdate
+from schemas import WorkflowUpdate
 
 
 def test_workflow_task_create():
@@ -78,3 +79,11 @@ def test_workflow_read_non_empty_task_list():
         id=1, name="workflow", project_id=1, task_list=[wft1, wft2]
     )
     debug(w)
+
+
+def test_workflow_update():
+    WorkflowUpdate(name="workflow", order_task_list=[0, 1, 3, 2])
+    WorkflowUpdate(name="workflow")
+    WorkflowUpdate(order_task_list=[0, 1, 3, 2])
+    with pytest.raises(ValidationError):
+        WorkflowUpdate(name="workflow", order_task_list=[0, 1, 3])
