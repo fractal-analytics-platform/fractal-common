@@ -90,18 +90,17 @@ class WorkflowCreate(_WorkflowBase):
 
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]
-    order_permutation: Optional[List[int]]
+    reordered_workflowtask_ids: Optional[List[int]]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
 
-    @validator("order_permutation")
-    def check_permutation(cls, value):
-        if set(value) != set(range(len(value))):
-            raise ValueError(
-                "`order_permutation` must be a permutation of "
-                f"{list(range(len(value)))} (given {value})"
-            )
+    @validator("reordered_workflowtask_ids")
+    def check_positive_and_unique(cls, value):
+        if any(i < 0 for i in value):
+            raise ValueError("Negative `id` in `reordered_workflowtask_ids`")
+        if len(value) != len(set(value)):
+            raise ValueError("`reordered_workflowtask_ids` has repetitions")
         return value
 
 
