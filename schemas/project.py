@@ -7,6 +7,7 @@ from pydantic import Field
 from pydantic import validator
 from sqlmodel import SQLModel
 
+from ._validators import val_absolute_path
 from ._validators import valstr
 
 
@@ -36,12 +37,12 @@ class _ResourceBase(SQLModel):
 
 class ResourceCreate(_ResourceBase):
     # Validators
-    _path = validator("path", allow_reuse=True)(valstr("path"))
+    _path = validator("path", allow_reuse=True)(val_absolute_path("path"))
 
 
 class ResourceUpdate(_ResourceBase):
     # Validators
-    _path = validator("path", allow_reuse=True)(valstr("path"))
+    _path = validator("path", allow_reuse=True)(val_absolute_path("path"))
 
 
 class ResourceRead(_ResourceBase):
@@ -116,7 +117,7 @@ class ProjectCreate(_ProjectBase):
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
     _project_dir = validator("project_dir", allow_reuse=True)(
-        valstr("project_dir")
+        val_absolute_path("project_dir")
     )
     _default_dataset_name = validator(
         "default_dataset_name", allow_reuse=True
@@ -136,5 +137,5 @@ class ProjectUpdate(_ProjectBase):
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
     _project_dir = validator("project_dir", allow_reuse=True)(
-        valstr("project_dir")
+        val_absolute_path("project_dir")
     )
