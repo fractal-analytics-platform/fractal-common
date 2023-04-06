@@ -1,3 +1,6 @@
+import os
+
+
 def valstr(attribute: str):
     """
     Check that a string attribute is not an empty string, and remove the
@@ -30,5 +33,26 @@ def valint(attribute: str, min_val: int = 1):
                 f"{min_val} (given {integer})"
             )
         return integer
+
+    return val
+
+
+def val_absolute_path(attribute: str):
+    """
+    Check that a string attribute is an absolute path
+    """
+
+    def val(string: str):
+        if string is None:
+            raise ValueError(f"String attribute '{attribute}' cannot be None")
+        s = string.strip()
+        if not s:
+            raise ValueError(f"String attribute '{attribute}' cannot be empty")
+        if not os.path.isabs(s):
+            raise ValueError(
+                f"String attribute '{attribute}' must be an absolute path "
+                f"(given '{s}')."
+            )
+        return s
 
     return val
