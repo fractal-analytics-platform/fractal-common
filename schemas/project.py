@@ -102,12 +102,10 @@ class _ProjectBase(SQLModel):
 
     Attributes:
         name: TBD
-        project_dir: TBD
         read_only: TBD
     """
 
     name: str
-    project_dir: str
     read_only: bool = False
 
 
@@ -116,9 +114,6 @@ class ProjectCreate(_ProjectBase):
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
-    _project_dir = validator("project_dir", allow_reuse=True)(
-        val_absolute_path("project_dir")
-    )
     _default_dataset_name = validator(
         "default_dataset_name", allow_reuse=True
     )(valstr("default_dataset_name"))
@@ -131,11 +126,7 @@ class ProjectRead(_ProjectBase):
 
 class ProjectUpdate(_ProjectBase):
     name: Optional[str]
-    project_dir: Optional[str]
     read_only: Optional[bool]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
-    _project_dir = validator("project_dir", allow_reuse=True)(
-        val_absolute_path("project_dir")
-    )

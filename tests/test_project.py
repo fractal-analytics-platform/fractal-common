@@ -7,16 +7,13 @@ from schemas import ProjectCreate
 
 def test_project_create():
     # Successful creation
-    p = ProjectCreate(name="my project", project_dir="/somewhere")
+    p = ProjectCreate(name="my project")
     debug(p)
     # Check that whitespaces are stripped from beginning/end of string
     NAME = "some project name"
-    p = ProjectCreate(name=f"  {NAME}  ", project_dir="/somewhere")
+    p = ProjectCreate(name=f"  {NAME}  ")
     debug(p)
     assert p.name == NAME
-    # Fail due to empty strings
+    # Fail due to empty string
     with pytest.raises(ValidationError):
-        ProjectCreate(name="  ", project_dir="/somewhere")
-
-    with pytest.raises(ValidationError):
-        ProjectCreate(name="my project", project_dir=" ")
+        ProjectCreate(name="  ")
