@@ -17,7 +17,7 @@ def test_workflow_task_create():
     # Successful creation
     t = WorkflowTaskCreate(order=1)
     debug(t)
-    # Missing arguments
+    # Invalid arguments
     with pytest.raises(ValidationError):
         WorkflowTaskCreate(order=-1)
     with pytest.raises(ValidationError):
