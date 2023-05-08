@@ -137,10 +137,6 @@ class TaskCollectPip(_TaskCollectBase):
                 raise ValueError(
                     f"Package path must be absolute: {package_path}"
                 )
-            if not package_path.exists():
-                raise ValueError(
-                    f"Package file does not exist: {package_path}"
-                )
         return value
 
 
