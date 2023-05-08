@@ -26,9 +26,7 @@ def test_dataset_create():
 
 def test_dataset_read():
     # Successful creation - empty resource_list
-    d = DatasetRead(
-        id=1, project_id=1, resource_list=[], name="n", read_only=True
-    )
+    d = DatasetRead(id=1, resource_list=[], name="n", read_only=True)
     debug(d)
     # Successful creation - non-trivial resource_list
     r1 = ResourceRead(id=1, dataset_id=1, path="/something")

@@ -15,18 +15,13 @@ from schemas import WorkflowTaskUpdate
 
 def test_workflow_task_create():
     # Successful creation
-    t = WorkflowTaskCreate(task_id=1)
+    t = WorkflowTaskCreate(order=1)
     debug(t)
     # Missing arguments
     with pytest.raises(ValidationError):
-        WorkflowTaskCreate(task_id=-1)
-    # Several values of order
-    t = WorkflowTaskCreate(task_id=1, order=1)
-    t = WorkflowTaskCreate(task_id=1, order=0)
+        WorkflowTaskCreate(order=-1)
     with pytest.raises(ValidationError):
-        WorkflowTaskCreate(task_id=1, order=-1)
-    with pytest.raises(ValidationError):
-        WorkflowTaskCreate(task_id=1, order=None)
+        WorkflowTaskCreate(order=None)
 
 
 def test_workflow_task_update():
@@ -39,7 +34,7 @@ def test_workflow_task_update():
 
 
 def test_workflow_create():
-    w = WorkflowCreate(name="workflow", project_id=1)
+    w = WorkflowCreate(name="workflow")
     debug(w)
 
 
