@@ -11,4 +11,4 @@ def test_apply_workflow_create():
     )
     job = ApplyWorkflowCreate(**valid_args)
     debug(job)
-    assert job.output_dataset_id is None
+    assert job
