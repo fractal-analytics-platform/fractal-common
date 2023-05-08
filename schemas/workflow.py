@@ -35,10 +35,8 @@ class _WorkflowTaskBase(SQLModel):
 
 class WorkflowTaskCreate(_WorkflowTaskBase):
     order: Optional[int]
-    task_id: int
     # Validators
     _order = validator("order", allow_reuse=True)(valint("order", min_val=0))
-    _task_id = validator("task_id", allow_reuse=True)(valint("task_id"))
 
 
 class WorkflowTaskRead(_WorkflowTaskBase):
@@ -79,13 +77,8 @@ class WorkflowRead(_WorkflowBase):
 
 
 class WorkflowCreate(_WorkflowBase):
-    project_id: int
-
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
-    _project_id = validator("project_id", allow_reuse=True)(
-        valint("project_id")
-    )
 
 
 class WorkflowUpdate(_WorkflowBase):
