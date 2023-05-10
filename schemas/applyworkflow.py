@@ -37,6 +37,10 @@ class ApplyWorkflowCreate(ApplyWorkflowBase):
 
 class ApplyWorkflowRead(ApplyWorkflowBase):
     id: int
+    project_id: int
+    workflow_id: int
+    input_dataset_id: int
+    output_dataset_id: int
     start_timestamp: datetime
     status: str
     log: Optional[str]
