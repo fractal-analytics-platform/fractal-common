@@ -19,11 +19,9 @@ class ApplyWorkflowBase(SQLModel):
     Base class for ApplyWorkflow
 
     Attributes:
-        overwrite_input: TBD
         worker_init: TBD
     """
 
-    overwrite_input: bool = False
     worker_init: Optional[str]
 
 
