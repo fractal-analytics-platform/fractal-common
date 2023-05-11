@@ -1,4 +1,3 @@
-import uuid
 from typing import Optional
 
 from fastapi_users import schemas
@@ -15,7 +14,7 @@ __all__ = (
 )
 
 
-class UserRead(schemas.BaseUser[uuid.UUID]):
+class UserRead(schemas.BaseUser[int]):
     slurm_user: Optional[str]
     cache_dir: Optional[str]
 
