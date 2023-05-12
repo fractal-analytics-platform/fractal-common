@@ -40,7 +40,7 @@ class ApplyWorkflowRead(ApplyWorkflowBase):
     input_dataset_id: int
     output_dataset_id: int
     start_timestamp: datetime
-    end_timestamp: datetime
+    end_timestamp: Optional[datetime]
     status: str
     log: Optional[str]
     history: Optional[List[str]]
