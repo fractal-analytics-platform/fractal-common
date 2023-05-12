@@ -40,6 +40,7 @@ class ApplyWorkflowRead(ApplyWorkflowBase):
     input_dataset_id: int
     output_dataset_id: int
     start_timestamp: datetime
+    end_timestamp: datetime
     status: str
     log: Optional[str]
     history: Optional[List[str]]
@@ -49,4 +50,5 @@ class ApplyWorkflowRead(ApplyWorkflowBase):
     def sanitised_dict(self):
         d = self.dict()
         d["start_timestamp"] = str(self.start_timestamp)
+        d["end_timestamp"] = str(self.end_timestamp)
         return d
