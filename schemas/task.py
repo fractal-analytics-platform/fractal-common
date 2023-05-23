@@ -24,7 +24,9 @@ __all__ = (
 
 
 class _TaskBase(SQLModel):
-    """# TODO fix me
+    """
+
+    # TODO fix me
     Task base class
 
     A Task is the elemental unit of a workflow, and must be a self-standing
@@ -49,6 +51,7 @@ class _TaskBase(SQLModel):
 
     name: str
     source: str
+    args_schema: Optional[dict] = None
 
 
 class TaskUpdate(_TaskBase):
