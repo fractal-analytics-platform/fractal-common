@@ -59,7 +59,7 @@ class TaskUpdate(_TaskBase):
     source: Optional[str]
     default_args: Optional[dict[str, Any]]
     meta: Optional[dict[str, Any]]
-    args_schema: Optional[dict]
+    args_schema: Optional[dict[str, Any]]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -89,7 +89,7 @@ class TaskRead(_TaskBase):
     output_type: str
     default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
-    args_schema: Optional[dict] = None
+    args_schema: Optional[dict[str, Any]] = None
 
 
 class TaskCreate(_TaskBase):
@@ -98,7 +98,7 @@ class TaskCreate(_TaskBase):
     output_type: str
     default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
-    args_schema: Optional[dict] = None
+    args_schema: Optional[dict[str, Any]] = None
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
