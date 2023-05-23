@@ -49,7 +49,6 @@ class _TaskBase(SQLModel):
 
     name: str
     source: str
-    args_schema: Optional[dict] = None
 
 
 class TaskUpdate(_TaskBase):
@@ -89,6 +88,7 @@ class TaskRead(_TaskBase):
     output_type: str
     default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
+    args_schema: Optional[dict] = None
 
 
 class TaskCreate(_TaskBase):
@@ -97,6 +97,7 @@ class TaskCreate(_TaskBase):
     output_type: str
     default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
+    args_schema: Optional[dict] = None
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
