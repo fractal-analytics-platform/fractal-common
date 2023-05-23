@@ -3,3 +3,4 @@ sqlmodel
 fastapi-users
 devtools
 pytest
+typing-extensions<4.6
