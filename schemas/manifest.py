@@ -1,7 +1,5 @@
 from pathlib import Path
 from typing import Any
-from typing import Dict
-from typing import List
 from typing import Optional
 from typing import TypeVar
 
@@ -46,8 +44,8 @@ class _TaskManifestBase(BaseModel):
     executable: Path
     input_type: str
     output_type: str
-    default_args: Optional[Dict[str, Any]] = Field(default_factory=dict)
-    meta: Optional[Dict[str, Any]] = Field(default_factory=dict)
+    default_args: Optional[dict[str, Any]] = Field(default_factory=dict)
+    meta: Optional[dict[str, Any]] = Field(default_factory=dict)
 
 
 TaskManifestType = TypeVar("TaskManifestType", bound=_TaskManifestBase)
@@ -69,13 +67,13 @@ class _ManifestBase(BaseModel):
             manifests as the schema evolves. This is for instance used by
             Fractal to determine which subclass of the present base class needs
             be used to read and validate the input.
-        task_list : List[TaskManifestType]
+        task_list : list[TaskManifestType]
             The list of tasks, represented as specified by subclasses of the
             _TaskManifestBase (a.k.a. TaskManifestType)
     """
 
     manifest_version: str
-    task_list: List[TaskManifestType]  # type: ignore
+    task_list: list[TaskManifestType]  # type: ignore
 
 
 class TaskManifestV1(_TaskManifestBase):
@@ -87,7 +85,7 @@ class ManifestV1(_ManifestBase):
     Manifest schema version 1
     """
 
-    task_list: List[TaskManifestV1]
+    task_list: list[TaskManifestV1]
 
     @validator("manifest_version")
     def manifest_version_1(cls, value):

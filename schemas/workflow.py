@@ -1,6 +1,4 @@
 from typing import Any
-from typing import Dict
-from typing import List
 from typing import Optional
 
 from pydantic import validator
@@ -29,8 +27,8 @@ __all__ = (
 
 class _WorkflowTaskBase(SQLModel):
 
-    meta: Optional[Dict[str, Any]] = None
-    args: Optional[Dict[str, Any]] = None
+    meta: Optional[dict[str, Any]] = None
+    args: Optional[dict[str, Any]] = None
 
 
 class WorkflowTaskCreate(_WorkflowTaskBase):
@@ -73,7 +71,7 @@ class _WorkflowBase(SQLModel):
 class WorkflowRead(_WorkflowBase):
     id: int
     project_id: int
-    task_list: List[WorkflowTaskRead]
+    task_list: list[WorkflowTaskRead]
 
 
 class WorkflowCreate(_WorkflowBase):
@@ -83,7 +81,7 @@ class WorkflowCreate(_WorkflowBase):
 
 class WorkflowUpdate(_WorkflowBase):
     name: Optional[str]
-    reordered_workflowtask_ids: Optional[List[int]]
+    reordered_workflowtask_ids: Optional[list[int]]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -98,11 +96,11 @@ class WorkflowUpdate(_WorkflowBase):
 
 
 class WorkflowImport(_WorkflowBase):
-    task_list: List[WorkflowTaskImport]
+    task_list: list[WorkflowTaskImport]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
 
 
 class WorkflowExport(_WorkflowBase):
-    task_list: List[WorkflowTaskExport]
+    task_list: list[WorkflowTaskExport]
