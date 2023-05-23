@@ -1,8 +1,8 @@
 from typing import Any
 from typing import Optional
 
+from pydantic import BaseModel
 from pydantic import validator
-from sqlmodel import SQLModel
 
 from ._validators import valint
 from ._validators import valstr
@@ -25,7 +25,7 @@ __all__ = (
 )
 
 
-class _WorkflowTaskBase(SQLModel):
+class _WorkflowTaskBase(BaseModel):
 
     meta: Optional[dict[str, Any]] = None
     args: Optional[dict[str, Any]] = None
@@ -64,7 +64,7 @@ class WorkflowTaskUpdate(_WorkflowTaskBase):
         return m
 
 
-class _WorkflowBase(SQLModel):
+class _WorkflowBase(BaseModel):
     name: str
 
 

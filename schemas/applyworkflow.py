@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import Optional
 
+from pydantic import BaseModel
 from pydantic import validator
-from sqlmodel import SQLModel
 
 from ._validators import valstr
 
@@ -13,7 +13,7 @@ __all__ = (
 )
 
 
-class ApplyWorkflowBase(SQLModel):
+class ApplyWorkflowBase(BaseModel):
     """
     Base class for ApplyWorkflow
 
