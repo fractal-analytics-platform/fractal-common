@@ -59,6 +59,7 @@ class TaskUpdate(_TaskBase):
     source: Optional[str]
     default_args: Optional[dict[str, Any]]
     meta: Optional[dict[str, Any]]
+    args_schema: Optional[dict]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
