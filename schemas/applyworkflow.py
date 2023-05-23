@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 from typing import Optional
 
 from pydantic import validator
@@ -43,7 +42,7 @@ class ApplyWorkflowRead(ApplyWorkflowBase):
     end_timestamp: Optional[datetime]
     status: str
     log: Optional[str]
-    history: Optional[List[str]]
+    history: Optional[list[str]]
     working_dir: Optional[str]
     working_dir_user: Optional[str]
 

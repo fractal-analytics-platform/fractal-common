@@ -1,7 +1,5 @@
 from pathlib import Path
 from typing import Any
-from typing import Dict
-from typing import List
 from typing import Literal
 from typing import Optional
 
@@ -43,8 +41,8 @@ class _TaskBase(SQLModel):
             The type of data the task expects as input
         output_type:
             The type of data the task expects as output
-        default_args: Optional[Dict[str, Any]]
-            Dictionary (saved as JSON) of the default parameters of the task
+        default_args: Optional[dict[str, Any]]
+            dictionary (saved as JSON) of the default parameters of the task
     """
 
     name: str
@@ -57,8 +55,8 @@ class TaskUpdate(_TaskBase):
     output_type: Optional[str]
     command: Optional[str]
     source: Optional[str]
-    default_args: Optional[Dict[str, Any]]
-    meta: Optional[Dict[str, Any]]
+    default_args: Optional[dict[str, Any]]
+    meta: Optional[dict[str, Any]]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -86,16 +84,16 @@ class TaskRead(_TaskBase):
     command: str
     input_type: str
     output_type: str
-    default_args: Optional[Dict[str, Any]] = Field(default={})
-    meta: Optional[Dict[str, Any]] = Field(default={})
+    default_args: Optional[dict[str, Any]] = Field(default={})
+    meta: Optional[dict[str, Any]] = Field(default={})
 
 
 class TaskCreate(_TaskBase):
     command: str
     input_type: str
     output_type: str
-    default_args: Optional[Dict[str, Any]] = Field(default={})
-    meta: Optional[Dict[str, Any]] = Field(default={})
+    default_args: Optional[dict[str, Any]] = Field(default={})
+    meta: Optional[dict[str, Any]] = Field(default={})
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -156,7 +154,7 @@ class TaskCollectStatus(_TaskCollectBase):
     status: Literal["pending", "installing", "collecting", "fail", "OK"]
     package: str
     venv_path: Path
-    task_list: Optional[List[TaskRead]] = Field(default=[])
+    task_list: Optional[list[TaskRead]] = Field(default=[])
     log: Optional[str]
     info: Optional[str]
 

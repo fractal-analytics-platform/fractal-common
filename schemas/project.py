@@ -1,6 +1,4 @@
 from typing import Any
-from typing import Dict
-from typing import List
 from typing import Optional
 
 from pydantic import Field
@@ -66,13 +64,13 @@ class _DatasetBase(SQLModel):
 
     name: str
     type: Optional[str]
-    meta: Dict[str, Any] = Field(default={})
+    meta: dict[str, Any] = Field(default={})
     read_only: bool = False
 
 
 class DatasetUpdate(_DatasetBase):
     name: Optional[str]
-    meta: Optional[Dict[str, Any]] = None
+    meta: Optional[dict[str, Any]] = None
     read_only: Optional[bool]
 
     # Validators
@@ -88,7 +86,7 @@ class DatasetCreate(_DatasetBase):
 
 class DatasetRead(_DatasetBase):
     id: int
-    resource_list: List[ResourceRead]
+    resource_list: list[ResourceRead]
     project_id: int
     read_only: bool
 
@@ -121,7 +119,7 @@ class ProjectCreate(_ProjectBase):
 
 class ProjectRead(_ProjectBase):
     id: int
-    dataset_list: List[DatasetRead] = []
+    dataset_list: list[DatasetRead] = []
 
 
 class ProjectUpdate(_ProjectBase):
