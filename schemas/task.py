@@ -6,8 +6,8 @@ from typing import Literal
 from typing import Optional
 
 from pydantic import BaseModel
+from pydantic import Field
 from pydantic import validator
-from sqlmodel import Field
 from sqlmodel import SQLModel
 
 from ._validators import valstr

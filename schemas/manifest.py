@@ -6,8 +6,8 @@ from typing import Optional
 from typing import TypeVar
 
 from pydantic import BaseModel
+from pydantic import Field
 from pydantic import validator
-from sqlmodel import Field
 
 
 __all__ = ("TaskManifestV1", "ManifestV1")
