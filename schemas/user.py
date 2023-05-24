@@ -17,16 +17,19 @@ __all__ = (
 class UserRead(schemas.BaseUser[int]):
     slurm_user: Optional[str]
     cache_dir: Optional[str]
+    username: Optional[str]
 
 
 class UserUpdate(schemas.BaseUserUpdate):
     slurm_user: Optional[str]
     cache_dir: Optional[str]
+    username: Optional[str]
 
     # Validators
     _slurm_user = validator("slurm_user", allow_reuse=True)(
         valstr("slurm_user")
     )
+    _username = validator("username", allow_reuse=True)(valstr("username"))
     _cache_dir = validator("cache_dir", allow_reuse=True)(
         val_absolute_path("cache_dir")
     )
@@ -35,11 +38,13 @@ class UserUpdate(schemas.BaseUserUpdate):
 class UserCreate(schemas.BaseUserCreate):
     slurm_user: Optional[str]
     cache_dir: Optional[str]
+    username: Optional[str]
 
     # Validators
     _slurm_user = validator("slurm_user", allow_reuse=True)(
         valstr("slurm_user")
     )
+    _username = validator("username", allow_reuse=True)(valstr("username"))
     _cache_dir = validator("cache_dir", allow_reuse=True)(
         val_absolute_path("cache_dir")
     )

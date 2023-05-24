@@ -12,6 +12,25 @@ def test_task_update():
     debug(t)
     assert list(t.dict(exclude_none=True).keys()) == ["name"]
     assert list(t.dict(exclude_unset=True).keys()) == ["name"]
+    # Some failures
+    with pytest.raises(ValidationError):
+        TaskUpdate(name="task", owner="")
+    with pytest.raises(ValidationError):
+        TaskUpdate(name="task", owner=None)
+    with pytest.raises(ValidationError):
+        TaskUpdate(name="task", version="")
+    with pytest.raises(ValidationError):
+        TaskUpdate(name="task", version=None)
+    # Successful cretion, with mutliple fields set
+    t = TaskUpdate(
+        name="task",
+        version="1.2.3",
+        owner="someone",
+    )
+    debug(t)
+    assert t.name
+    assert t.version
+    assert t.owner
 
 
 def test_task_create():
@@ -22,6 +41,8 @@ def test_task_create():
         command="command",
         input_type="input_type",
         output_type="output_type",
+        version="1.2.3",
+        owner="someone",
     )
     debug(t)
     # Missing arguments

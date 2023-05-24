@@ -56,6 +56,8 @@ class TaskUpdate(_TaskBase):
     source: Optional[str]
     default_args: Optional[dict[str, Any]]
     meta: Optional[dict[str, Any]]
+    owner: Optional[str]
+    version: Optional[str]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -67,6 +69,8 @@ class TaskUpdate(_TaskBase):
     )
     _command = validator("command", allow_reuse=True)(valstr("command"))
     _source = validator("source", allow_reuse=True)(valstr("source"))
+    _owner = validator("owner", allow_reuse=True)(valstr("owner"))
+    _version = validator("version", allow_reuse=True)(valstr("version"))
 
 
 class TaskImport(_TaskBase):
@@ -85,6 +89,8 @@ class TaskRead(_TaskBase):
     output_type: str
     default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
+    owner: Optional[str]
+    version: Optional[str]
 
 
 class TaskCreate(_TaskBase):
@@ -93,6 +99,8 @@ class TaskCreate(_TaskBase):
     output_type: str
     default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
+    owner: Optional[str]
+    version: Optional[str]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -104,6 +112,8 @@ class TaskCreate(_TaskBase):
     )
     _command = validator("command", allow_reuse=True)(valstr("command"))
     _source = validator("source", allow_reuse=True)(valstr("source"))
+    _owner = validator("owner", allow_reuse=True)(valstr("owner"))
+    _version = validator("version", allow_reuse=True)(valstr("version"))
 
 
 class _TaskCollectBase(BaseModel):
