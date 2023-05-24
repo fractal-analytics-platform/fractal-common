@@ -31,3 +31,15 @@ def test_user_create():
         u = UserCreate(email="a@b.c", password="asd", cache_dir="xxx")
     debug(e.value)
     assert "must be an absolute path" in e.value.errors()[0]["msg"]
+    # With all attributes
+    u = UserCreate(
+        email="a@b.c",
+        password="pwd",
+        slurm_user="slurm_user",
+        username="username",
+        cache_dir="/some/path",
+    )
+    debug(u)
+    assert u.slurm_user
+    assert u.cache_dir
+    assert u.username
