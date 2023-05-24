@@ -1,5 +1,4 @@
 pydantic
-sqlmodel
 fastapi-users
 devtools
 pytest
