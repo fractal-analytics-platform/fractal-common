@@ -14,10 +14,6 @@ def test_task_update():
     assert list(t.dict(exclude_unset=True).keys()) == ["name"]
     # Some failures
     with pytest.raises(ValidationError):
-        TaskUpdate(name="task", owner="")
-    with pytest.raises(ValidationError):
-        TaskUpdate(name="task", owner=None)
-    with pytest.raises(ValidationError):
         TaskUpdate(name="task", version="")
     with pytest.raises(ValidationError):
         TaskUpdate(name="task", version=None)
@@ -30,7 +26,6 @@ def test_task_update():
     debug(t)
     assert t.name
     assert t.version
-    assert t.owner
 
 
 def test_task_create():
