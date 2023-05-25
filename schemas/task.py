@@ -40,8 +40,8 @@ class _TaskBase(SQLModel):
             dictionary (saved as JSON) of the default parameters of the task
     """
 
-    name: str
     source: str
+    _source = validator("source", allow_reuse=True)(valstr("source"))
 
 
 class TaskUpdate(_TaskBase):
@@ -63,13 +63,11 @@ class TaskUpdate(_TaskBase):
         valstr("output_type")
     )
     _command = validator("command", allow_reuse=True)(valstr("command"))
-    _source = validator("source", allow_reuse=True)(valstr("source"))
     _version = validator("version", allow_reuse=True)(valstr("version"))
 
 
 class TaskImport(_TaskBase):
-    _name = validator("name", allow_reuse=True)(valstr("name"))
-    _source = validator("source", allow_reuse=True)(valstr("source"))
+    pass
 
 
 class TaskExport(_TaskBase):
@@ -78,6 +76,7 @@ class TaskExport(_TaskBase):
 
 class TaskRead(_TaskBase):
     id: int
+    name: str
     command: str
     input_type: str
     output_type: str
@@ -88,6 +87,7 @@ class TaskRead(_TaskBase):
 
 
 class TaskCreate(_TaskBase):
+    name: str
     command: str
     input_type: str
     output_type: str
@@ -104,5 +104,4 @@ class TaskCreate(_TaskBase):
         valstr("output_type")
     )
     _command = validator("command", allow_reuse=True)(valstr("command"))
-    _source = validator("source", allow_reuse=True)(valstr("source"))
     _version = validator("version", allow_reuse=True)(valstr("version"))
