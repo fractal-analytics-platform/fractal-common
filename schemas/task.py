@@ -16,7 +16,7 @@ __all__ = (
 )
 
 
-class _TaskBase(SQLModel):
+class _TaskBase(BaseModel):
     """
 
     # TODO fix me
