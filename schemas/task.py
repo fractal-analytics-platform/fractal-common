@@ -89,7 +89,7 @@ class TaskRead(_TaskBase):
     meta: Optional[dict[str, Any]] = Field(default={})
     owner: Optional[str]
     version: Optional[str]
-    args_schema: Optional[dict[str, Any]] = None
+    args_schema: Optional[dict[str, Any]]
     args_schema_version: Optional[str]
 
 
@@ -101,7 +101,7 @@ class TaskCreate(_TaskBase):
     default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
     version: Optional[str]
-    args_schema: Optional[dict[str, Any]] = None
+    args_schema: Optional[dict[str, Any]]
     args_schema_version: Optional[str]
 
     # Validators
