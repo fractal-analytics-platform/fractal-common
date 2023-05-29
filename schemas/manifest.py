@@ -74,6 +74,8 @@ class _ManifestBase(BaseModel):
 
     manifest_version: str
     task_list: list[TaskManifestType]  # type: ignore
+    has_args_schema: bool = False
+    args_schema_version: Optional[str]
 
 
 class TaskManifestV1(_TaskManifestBase):
