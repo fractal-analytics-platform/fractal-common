@@ -90,6 +90,7 @@ class TaskRead(_TaskBase):
     owner: Optional[str]
     version: Optional[str]
     args_schema: Optional[dict[str, Any]] = None
+    args_schema_version: Optional[str]
 
 
 class TaskCreate(_TaskBase):
@@ -101,6 +102,7 @@ class TaskCreate(_TaskBase):
     meta: Optional[dict[str, Any]] = Field(default={})
     version: Optional[str]
     args_schema: Optional[dict[str, Any]] = None
+    args_schema_version: Optional[str]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -112,3 +114,6 @@ class TaskCreate(_TaskBase):
     )
     _command = validator("command", allow_reuse=True)(valstr("command"))
     _version = validator("version", allow_reuse=True)(valstr("version"))
+    _args_schema_version = validator("args_schema_version", allow_reuse=True)(
+        valstr("args_schema_version")
+    )
