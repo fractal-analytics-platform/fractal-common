@@ -57,6 +57,7 @@ class TaskUpdate(_TaskBase):
     meta: Optional[dict[str, Any]]
     version: Optional[str]
     args_schema: Optional[dict[str, Any]]
+    args_schema_version: Optional[str]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
