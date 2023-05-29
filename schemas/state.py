@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Any
 from typing import Optional
 
-from sqlmodel import SQLModel
+from pydantic import BaseModel
 
 
 __all__ = (
@@ -11,7 +11,7 @@ __all__ = (
 )
 
 
-class _StateBase(SQLModel):
+class _StateBase(BaseModel):
     """
     Base class for `State`
 

@@ -1,19 +1,19 @@
 from datetime import datetime
 from typing import Optional
 
+from pydantic import BaseModel
 from pydantic import validator
-from sqlmodel import SQLModel
 
 from ._validators import valstr
 
 __all__ = (
-    "ApplyWorkflowBase",
+    "_ApplyWorkflowBase",
     "ApplyWorkflowCreate",
     "ApplyWorkflowRead",
 )
 
 
-class ApplyWorkflowBase(SQLModel):
+class _ApplyWorkflowBase(BaseModel):
     """
     Base class for ApplyWorkflow
 
@@ -24,7 +24,7 @@ class ApplyWorkflowBase(SQLModel):
     worker_init: Optional[str]
 
 
-class ApplyWorkflowCreate(ApplyWorkflowBase):
+class ApplyWorkflowCreate(_ApplyWorkflowBase):
 
     # Validators
     _worker_init = validator("worker_init", allow_reuse=True)(
@@ -32,7 +32,7 @@ class ApplyWorkflowCreate(ApplyWorkflowBase):
     )
 
 
-class ApplyWorkflowRead(ApplyWorkflowBase):
+class ApplyWorkflowRead(_ApplyWorkflowBase):
     id: int
     project_id: int
     workflow_id: int

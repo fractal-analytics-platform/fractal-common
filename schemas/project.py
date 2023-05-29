@@ -1,9 +1,9 @@
 from typing import Any
 from typing import Optional
 
+from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-from sqlmodel import SQLModel
 
 from ._validators import val_absolute_path
 from ._validators import valstr
@@ -25,7 +25,7 @@ __all__ = (
 # RESOURCE
 
 
-class _ResourceBase(SQLModel):
+class _ResourceBase(BaseModel):
     """
     Base class for Resource
     """
@@ -51,7 +51,7 @@ class ResourceRead(_ResourceBase):
 # DATASET
 
 
-class _DatasetBase(SQLModel):
+class _DatasetBase(BaseModel):
     """
     Base class for Dataset
 
@@ -94,7 +94,7 @@ class DatasetRead(_DatasetBase):
 # PROJECT
 
 
-class _ProjectBase(SQLModel):
+class _ProjectBase(BaseModel):
     """
     Base class for Project
 
