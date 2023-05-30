@@ -40,8 +40,6 @@ class _TaskManifestBase(BaseModel):
             etc.
         args_schema:
             JSON Schema for task arguments
-        args_schema_version:
-            Label of how `args_schema` was generated (e.g. `pydantic_v1`).
     """
 
     name: str
@@ -76,6 +74,11 @@ class _ManifestBase(BaseModel):
         task_list : list[TaskManifestType]
             The list of tasks, represented as specified by subclasses of the
             _TaskManifestBase (a.k.a. TaskManifestType)
+        has_args_schemas:
+            `True` if the manifest incldues JSON Schemas for the arguments of
+            each task.
+        args_schema_version:
+            Label of how `args_schema`s were generated (e.g. `pydantic_v1`).
     """
 
     manifest_version: str
