@@ -19,28 +19,12 @@ __all__ = (
 class _TaskBase(BaseModel):
     """
 
-    # TODO fix me
-
-    Task base class
-
-    A Task is the elemental unit of a workflow, and must be a self-standing
-    executable.
+    Base class for `Task` and `Task{Create,Read,Update,Import,Export}` models
 
     Attributes
-        name:
-            A human readable name for the task
-        command:
-            The command(s) that executes the task
         source:
-            Path or url to task source. This is the information is used to
-            match tasks across fractal installations when a workflow is
-            imported.
-        input_type:
-            The type of data the task expects as input
-        output_type:
-            The type of data the task expects as output
-        default_args: Optional[dict[str, Any]]
-            dictionary (saved as JSON) of the default parameters of the task
+            This is the information is used to match tasks across fractal
+            installations when a workflow is imported.
     """
 
     source: str
