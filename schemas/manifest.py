@@ -1,10 +1,10 @@
-from pathlib import Path
 from typing import Any
 from typing import Optional
 from typing import TypeVar
 
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 
@@ -13,7 +13,7 @@ __all__ = ("TaskManifestV1", "ManifestV1")
 
 class _TaskManifestBase(BaseModel):
     """
-    Base class for TaskManifest
+    Base class for `TaskManifest`
 
     Represents a task within a manfest
 
@@ -38,14 +38,17 @@ class _TaskManifestBase(BaseModel):
             Additional information about the package, such as hash of the
             executable, specific runtime requirements (e.g., need_gpu=True),
             etc.
+        args_schema:
+            JSON Schema for task arguments
     """
 
     name: str
-    executable: Path
+    executable: str
     input_type: str
     output_type: str
     default_args: Optional[dict[str, Any]] = Field(default_factory=dict)
     meta: Optional[dict[str, Any]] = Field(default_factory=dict)
+    args_schema: Optional[dict[str, Any]]
 
 
 TaskManifestType = TypeVar("TaskManifestType", bound=_TaskManifestBase)
@@ -70,12 +73,30 @@ class _ManifestBase(BaseModel):
         task_list : list[TaskManifestType]
             The list of tasks, represented as specified by subclasses of the
             _TaskManifestBase (a.k.a. TaskManifestType)
+        has_args_schemas:
+            `True` if the manifest incldues JSON Schemas for the arguments of
+            each task.
+        args_schema_version:
+            Label of how `args_schema`s were generated (e.g. `pydantic_v1`).
     """
 
     manifest_version: str
-    task_list: list[TaskManifestType]  # type: ignore
-    has_args_schema: bool = False
+    task_list: list[TaskManifestType]
+    has_args_schemas: bool = False
     args_schema_version: Optional[str]
+
+    @root_validator()
+    def _check_args_schemas_are_present(cls, values):
+        has_args_schemas = values["has_args_schemas"]
+        task_list = values["task_list"]
+        if has_args_schemas:
+            for task in task_list:
+                if task.args_schema is None:
+                    raise ValueError(
+                        f'has_args_schemas={has_args_schemas} but task "'
+                        f'{task.name}" has args_schema={task.args_schema}.'
+                    )
+        return values
 
 
 class TaskManifestV1(_TaskManifestBase):
@@ -92,4 +113,4 @@ class ManifestV1(_ManifestBase):
     @validator("manifest_version")
     def manifest_version_1(cls, value):
         if value != "1":
-            raise ValueError("Wrong manifest version")
+            raise ValueError(f"Wrong manifest version (given {value})")
