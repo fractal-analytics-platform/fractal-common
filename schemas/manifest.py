@@ -48,7 +48,6 @@ class _TaskManifestBase(BaseModel):
     output_type: str
     default_args: Optional[dict[str, Any]] = Field(default_factory=dict)
     meta: Optional[dict[str, Any]] = Field(default_factory=dict)
-    args_schema_version: Optional[str]
     args_schema: Optional[dict[str, Any]]
 
 
