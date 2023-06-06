@@ -37,7 +37,6 @@ class TaskUpdate(_TaskBase):
     output_type: Optional[str]
     command: Optional[str]
     source: Optional[str]
-    default_args: Optional[dict[str, Any]]
     meta: Optional[dict[str, Any]]
     version: Optional[str]
     args_schema: Optional[dict[str, Any]]
@@ -69,7 +68,6 @@ class TaskRead(_TaskBase):
     command: str
     input_type: str
     output_type: str
-    default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
     owner: Optional[str]
     version: Optional[str]
@@ -82,7 +80,6 @@ class TaskCreate(_TaskBase):
     command: str
     input_type: str
     output_type: str
-    default_args: Optional[dict[str, Any]] = Field(default={})
     meta: Optional[dict[str, Any]] = Field(default={})
     version: Optional[str]
     args_schema: Optional[dict[str, Any]]

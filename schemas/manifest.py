@@ -31,9 +31,6 @@ class _TaskManifestBase(BaseModel):
             The input type accepted by the task
         output_type:
             The output type returned by the task
-        default_args:
-            An arbitrary, JSON-serializable dictionary containing the default
-            parameters that will be passed to the task
         meta:
             Additional information about the package, such as hash of the
             executable, specific runtime requirements (e.g., need_gpu=True),
@@ -46,7 +43,6 @@ class _TaskManifestBase(BaseModel):
     executable: str
     input_type: str
     output_type: str
-    default_args: Optional[dict[str, Any]] = Field(default_factory=dict)
     meta: Optional[dict[str, Any]] = Field(default_factory=dict)
     args_schema: Optional[dict[str, Any]]
 
