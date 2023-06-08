@@ -22,3 +22,7 @@ def test_TaskCollectPip():
         c = TaskCollectPip(package="some-package", package_extras="")
     with pytest.raises(ValidationError):
         c = TaskCollectPip(package="some-package", package_extras=None)
+
+    c = TaskCollectPip(package="some-package", pinned_package_versions={})
+    with pytest.raises(ValidationError):
+        c = TaskCollectPip(package="some-package", pinned_package_versions=1)
