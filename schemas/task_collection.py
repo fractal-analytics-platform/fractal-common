@@ -40,12 +40,17 @@ class TaskCollectPip(_TaskCollectBase):
         package_version: Version of the package
         package_extras: Package extras to include in the `pip install` command
         python_version: Python version to install and run the package tasks
+        pinned_package_versions:
+            dictionary 'package':'version' used to pin versions for specific
+            packages.
+
     """
 
     package: str
     package_version: Optional[str] = None
     package_extras: Optional[str] = None
     python_version: Optional[str] = None
+    pinned_package_versions: Optional[dict[str, str]] = None
 
     _package_version = validator("package_version", allow_reuse=True)(
         valstr("package_version")
