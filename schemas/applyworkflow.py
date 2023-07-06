@@ -26,6 +26,9 @@ class _ApplyWorkflowBase(BaseModel):
 
 class ApplyWorkflowCreate(_ApplyWorkflowBase):
 
+    start_task: Optional[int] = None
+    end_task: Optional[int] = None
+
     # Validators
     _worker_init = validator("worker_init", allow_reuse=True)(
         valstr("worker_init")
