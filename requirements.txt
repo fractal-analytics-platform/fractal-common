@@ -1,4 +1,4 @@
-pydantic
+pydantic<2
 fastapi-users
 devtools
 pytest
