@@ -36,30 +36,34 @@ class ApplyWorkflowCreate(_ApplyWorkflowBase):
 
     @validator("first_task_index", always=True)
     def first_task_index_non_negative(cls, v, values):
+        """
+        Check that `first_task_index` is non-negative.
+        """
         if v is not None and v < 0:
             raise ValueError(
-                    f"first_task_index cannot be negative (given: {v})"
-                    )
+                f"first_task_index cannot be negative (given: {v})"
+            )
         return v
 
     @validator("last_task_index", always=True)
     def first_last_task_indices(cls, v, values):
         """
-        Check `last_task_index` is not smaller than `first_task_index`.
+        Check that `last_task_index` is non-negative, and that it is not
+        smaller than `first_task_index`.
         """
         if v is not None and v < 0:
             raise ValueError(
-                    f"last_task_index cannot be negative (given: {v})"
-                    )
+                f"last_task_index cannot be negative (given: {v})"
+            )
 
         first_task_index = values.get("first_task_index")
         last_task_index = v
         if first_task_index is not None and last_task_index is not None:
             if first_task_index > last_task_index:
                 raise ValueError(
-                        f"{first_task_index=} cannot be larger than "
-                        f"{last_task_index=}"
-                        )
+                    f"{first_task_index=} cannot be larger than "
+                    f"{last_task_index=}"
+                )
         return v
 
 
