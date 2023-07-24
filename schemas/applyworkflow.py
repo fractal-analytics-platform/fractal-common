@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any
 from typing import Optional
 
 from pydantic import BaseModel
@@ -25,7 +26,6 @@ class _ApplyWorkflowBase(BaseModel):
 
 
 class ApplyWorkflowCreate(_ApplyWorkflowBase):
-
     first_task_index: Optional[int] = None
     last_task_index: Optional[int] = None
 
@@ -77,6 +77,7 @@ class ApplyWorkflowRead(_ApplyWorkflowBase):
     end_timestamp: Optional[datetime]
     status: str
     log: Optional[str]
+    workflow_dump: dict[str, Any]
     history: Optional[list[str]]
     working_dir: Optional[str]
     working_dir_user: Optional[str]
