@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Optional
+from typing import Any
 
 from pydantic import BaseModel
 from pydantic import validator
@@ -25,14 +26,11 @@ class _ApplyWorkflowBase(BaseModel):
 
 
 class ApplyWorkflowCreate(_ApplyWorkflowBase):
-
     first_task_index: Optional[int] = None
     last_task_index: Optional[int] = None
 
     # Validators
-    _worker_init = validator("worker_init", allow_reuse=True)(
-        valstr("worker_init")
-    )
+    _worker_init = validator("worker_init", allow_reuse=True)(valstr("worker_init"))
 
     @validator("first_task_index", always=True)
     def first_task_index_non_negative(cls, v, values):
@@ -40,9 +38,7 @@ class ApplyWorkflowCreate(_ApplyWorkflowBase):
         Check that `first_task_index` is non-negative.
         """
         if v is not None and v < 0:
-            raise ValueError(
-                f"first_task_index cannot be negative (given: {v})"
-            )
+            raise ValueError(f"first_task_index cannot be negative (given: {v})")
         return v
 
     @validator("last_task_index", always=True)
@@ -52,17 +48,14 @@ class ApplyWorkflowCreate(_ApplyWorkflowBase):
         smaller than `first_task_index`.
         """
         if v is not None and v < 0:
-            raise ValueError(
-                f"last_task_index cannot be negative (given: {v})"
-            )
+            raise ValueError(f"last_task_index cannot be negative (given: {v})")
 
         first_task_index = values.get("first_task_index")
         last_task_index = v
         if first_task_index is not None and last_task_index is not None:
             if first_task_index > last_task_index:
                 raise ValueError(
-                    f"{first_task_index=} cannot be larger than "
-                    f"{last_task_index=}"
+                    f"{first_task_index=} cannot be larger than " f"{last_task_index=}"
                 )
         return v
 
@@ -77,6 +70,7 @@ class ApplyWorkflowRead(_ApplyWorkflowBase):
     end_timestamp: Optional[datetime]
     status: str
     log: Optional[str]
+    workflow_dump: dict[str, Any]
     history: Optional[list[str]]
     working_dir: Optional[str]
     working_dir_user: Optional[str]
