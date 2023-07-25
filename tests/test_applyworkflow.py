@@ -1,7 +1,10 @@
+from datetime import datetime
+
 import pytest
 from devtools import debug
 
 from schemas import ApplyWorkflowCreate
+from schemas import ApplyWorkflowRead
 
 
 def test_apply_workflow_create():
@@ -21,3 +24,20 @@ def test_apply_workflow_create():
     with pytest.raises(ValueError) as e:
         job = ApplyWorkflowCreate(first_task_index=2, last_task_index=0)
     debug(e)
+
+
+def test_apply_workflow_read():
+    x = ApplyWorkflowRead(
+        id=1,
+        project_id=1,
+        workflow_id=1,
+        input_dataset_id=1,
+        output_dataset_id=1,
+        start_timestamp="2019-12-23T23:10:11.115310Z",
+        status="good",
+        workflow_dump=dict(task_list=[]),
+    )
+
+    assert isinstance(x.start_timestamp, datetime)
+    y = x.sanitised_dict()
+    assert isinstance(y["start_timestamp"], str)
