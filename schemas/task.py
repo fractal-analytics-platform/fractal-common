@@ -21,7 +21,7 @@ class _TaskBase(BaseModel):
 
     Base class for `Task` and `Task{Create,Read,Update,Import,Export}` models
 
-    Attributes
+    Attributes:
         source:
             This is the information is used to match tasks across fractal
             installations when a workflow is imported.
