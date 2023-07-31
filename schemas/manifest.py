@@ -4,6 +4,7 @@ from typing import TypeVar
 
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import HttpUrl
 from pydantic import root_validator
 from pydantic import validator
 
@@ -37,6 +38,10 @@ class _TaskManifestBase(BaseModel):
             etc.
         args_schema:
             JSON Schema for task arguments
+        docs_info:
+            Additional information about the Task, coming from the docstring.
+        docs_link:
+            Link to Task docs.
     """
 
     name: str
@@ -45,6 +50,8 @@ class _TaskManifestBase(BaseModel):
     output_type: str
     meta: Optional[dict[str, Any]] = Field(default_factory=dict)
     args_schema: Optional[dict[str, Any]]
+    docs_info: Optional[str]
+    docs_link: Optional[HttpUrl]
 
 
 TaskManifestType = TypeVar("TaskManifestType", bound=_TaskManifestBase)
