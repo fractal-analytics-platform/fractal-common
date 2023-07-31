@@ -43,3 +43,16 @@ def test_task_create():
     # Missing arguments
     with pytest.raises(ValidationError):
         TaskCreate(name="task", source="source")
+
+    # Bad docs link
+    with pytest.raises(ValidationError):
+        TaskCreate(
+            name="task",
+            source="source",
+            command="command",
+            input_type="input_type",
+            output_type="output_type",
+            version="1.2.3",
+            owner="someone",
+            docs_link="htp://www.example.org",
+        )

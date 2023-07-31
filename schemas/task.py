@@ -3,6 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import HttpUrl
 from pydantic import validator
 
 from ._validators import valstr
@@ -41,6 +42,8 @@ class TaskUpdate(_TaskBase):
     version: Optional[str]
     args_schema: Optional[dict[str, Any]]
     args_schema_version: Optional[str]
+    docs_info: Optional[str]
+    docs_link: Optional[HttpUrl]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
@@ -73,6 +76,8 @@ class TaskRead(_TaskBase):
     version: Optional[str]
     args_schema: Optional[dict[str, Any]]
     args_schema_version: Optional[str]
+    docs_info: Optional[str]
+    docs_link: Optional[HttpUrl]
 
 
 class TaskCreate(_TaskBase):
@@ -84,6 +89,8 @@ class TaskCreate(_TaskBase):
     version: Optional[str]
     args_schema: Optional[dict[str, Any]]
     args_schema_version: Optional[str]
+    docs_info: Optional[str]
+    docs_link: Optional[HttpUrl]
 
     # Validators
     _name = validator("name", allow_reuse=True)(valstr("name"))
