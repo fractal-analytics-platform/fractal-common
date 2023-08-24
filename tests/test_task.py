@@ -15,8 +15,7 @@ def test_task_update():
     # Some failures
     with pytest.raises(ValidationError):
         TaskUpdate(name="task", version="")
-    with pytest.raises(ValidationError):
-        TaskUpdate(name="task", version=None)
+    TaskUpdate(name="task", version=None)
     # Successful cretion, with mutliple fields set
     t = TaskUpdate(
         name="task",
