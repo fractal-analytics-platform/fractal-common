@@ -2,6 +2,7 @@ import pytest
 
 from schemas import ProjectCreate
 from schemas import ResourceCreate
+from schemas import TaskUpdate
 from schemas import WorkflowTaskCreate
 
 
@@ -27,3 +28,13 @@ def test_fail_valint():
         WorkflowTaskCreate(order=None)
     with pytest.raises(ValueError):
         WorkflowTaskCreate(order=-1)
+
+
+def test_fail_valstr_opt():
+    TaskUpdate(version=None)
+    with pytest.raises(ValueError):
+        TaskUpdate(version="   ")
+    with pytest.raises(ValueError):
+        TaskUpdate(name=None)
+    with pytest.raises(ValueError):
+        TaskUpdate(name="   ")
