@@ -1,35 +1,26 @@
 import os
-from typing import Optional
 
 
-def valstr(attribute: str):
+def valstr(attribute: str, accept_none=False):
     """
     Check that a string attribute is not an empty string, and remove the
     leading and trailing whitespace characters.
+
+    If `accept_none is True` the validator also accept None.
     """
 
     def val(string: str):
         if string is None:
-            raise ValueError(f"String attribute '{attribute}' cannot be None")
+            if accept_none is True:
+                return string
+            else:
+                raise ValueError(
+                    f"String attribute '{attribute}' cannot be None"
+                )
         s = string.strip()
         if not s:
             raise ValueError(f"String attribute '{attribute}' cannot be empty")
         return s
-
-    return val
-
-
-def valstr_opt(attribute: Optional[str]):
-    def val(string: str):
-        if string is None:
-            return string
-        else:
-            s = string.strip()
-            if not s:
-                raise ValueError(
-                    f"String attribute '{attribute}' cannot be empty"
-                )
-            return s
 
     return val
 

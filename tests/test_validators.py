@@ -13,6 +13,10 @@ def test_fail_valstr():
     with pytest.raises(ValueError):
         ProjectCreate(name="   ")
 
+    TaskUpdate(version=None)
+    with pytest.raises(ValueError):
+        TaskUpdate(version="   ")
+
 
 def test_fail_val_absolute_path():
     ResourceCreate(path="/valid/path")
@@ -28,13 +32,3 @@ def test_fail_valint():
         WorkflowTaskCreate(order=None)
     with pytest.raises(ValueError):
         WorkflowTaskCreate(order=-1)
-
-
-def test_fail_valstr_opt():
-    TaskUpdate(version=None)
-    with pytest.raises(ValueError):
-        TaskUpdate(version="   ")
-    with pytest.raises(ValueError):
-        TaskUpdate(name=None)
-    with pytest.raises(ValueError):
-        TaskUpdate(name="   ")

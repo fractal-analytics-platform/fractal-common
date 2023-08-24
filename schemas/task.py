@@ -7,7 +7,6 @@ from pydantic import HttpUrl
 from pydantic import validator
 
 from ._validators import valstr
-from ._validators import valstr_opt
 
 __all__ = (
     "TaskCreate",
@@ -55,7 +54,9 @@ class TaskUpdate(_TaskBase):
         valstr("output_type")
     )
     _command = validator("command", allow_reuse=True)(valstr("command"))
-    _version = validator("version", allow_reuse=True)(valstr_opt("version"))
+    _version = validator("version", allow_reuse=True)(
+        valstr("version", accept_none=True)
+    )
 
 
 class TaskImport(_TaskBase):
