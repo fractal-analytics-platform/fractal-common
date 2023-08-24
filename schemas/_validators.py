@@ -1,17 +1,17 @@
 import os
 
 
-def valstr(attribute: str, accept_none=False):
+def valstr(attribute: str, accept_none: bool = False):
     """
     Check that a string attribute is not an empty string, and remove the
     leading and trailing whitespace characters.
 
-    If `accept_none is True` the validator also accept None.
+    If `accept_none`, the validator also accepts `None`.
     """
 
     def val(string: str):
         if string is None:
-            if accept_none is True:
+            if accept_none:
                 return string
             else:
                 raise ValueError(
