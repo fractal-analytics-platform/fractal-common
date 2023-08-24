@@ -2,6 +2,7 @@ import pytest
 
 from schemas import ProjectCreate
 from schemas import ResourceCreate
+from schemas import TaskUpdate
 from schemas import WorkflowTaskCreate
 
 
@@ -11,6 +12,10 @@ def test_fail_valstr():
         ProjectCreate(name=None)
     with pytest.raises(ValueError):
         ProjectCreate(name="   ")
+
+    TaskUpdate(version=None)
+    with pytest.raises(ValueError):
+        TaskUpdate(version="   ")
 
 
 def test_fail_val_absolute_path():

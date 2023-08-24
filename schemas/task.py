@@ -54,7 +54,9 @@ class TaskUpdate(_TaskBase):
         valstr("output_type")
     )
     _command = validator("command", allow_reuse=True)(valstr("command"))
-    _version = validator("version", allow_reuse=True)(valstr("version"))
+    _version = validator("version", allow_reuse=True)(
+        valstr("version", accept_none=True)
+    )
 
 
 class TaskImport(_TaskBase):
