@@ -1,5 +1,12 @@
 # Fractal Common
 
+> ⚠️ This repository used to host resources to be shared by `fractal-server` and `fractal-client`.
+> As of September 2023, it has been moved into a standard folder of `fractal-server` (see https://github.com/fractal-analytics-platform/fractal-server/issues/857, https://github.com/fractal-analytics-platform/fractal-server/pull/859, https://github.com/fractal-analytics-platform/fractal/issues/548, https://github.com/fractal-analytics-platform/fractal/pull/551).
+> The repository is left here only as a public archive.
+
+---
+
+
 [![CI Status](https://github.com/fractal-analytics-platform/fractal-common/actions/workflows/ci.yml/badge.svg)](https://github.com/fractal-analytics-platform/fractal-common/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
